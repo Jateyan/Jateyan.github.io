@@ -5,10 +5,9 @@ import { viteBundler } from '@vuepress/bundler-vite'
 
 export default defineUserConfig({
   lang: 'en-US',
-
   title: 'VuePress',
   description: 'My first VuePress Site',
-
+  base:'/Jateyan/',
   theme: defaultTheme({
     logo: 'https://vuejs.press/images/hero.png',
 
