@@ -4,10 +4,10 @@ const sidebarConf = require('./config/sidebar')
 const pluginsConf = require('./config/plugins/index')
 module.exports = {
     //注意，此处需要填写你部署在nginx下的文件夹名称，如果是根目录，那么可以注释掉此行，注释掉后本地打开index.html无法访问
-    //base: "/dist/",
+    base: "/Jateyan/",
     title: "君哥聊编程",
     description: '点赞、转发、收藏',
-    dest: './dist',
+    // dest: './dist',
     port: '7777',
     head: [
         ['link', { rel: 'icon', href: '/img/favicon.ico' }],
