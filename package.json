@@ -1,21 +1,20 @@
 {
-  "name": "templete",
-  "version": "1.1.1",
-  "description": "A VuePress project created by vuepress-creator.",
-  "main": "index.js",
-  "scripts": {
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs"
-  },
-  "keywords": [],
-  "author": "Feng L.H.",
+  "name": "my-vuepress-site",
+  "version": "0.0.1",
+  "description": "A VuePress project",
   "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "docs:build": "vuepress build docs",
+    "docs:clean-dev": "vuepress dev docs --clean-cache",
+    "docs:dev": "vuepress dev docs",
+    "docs:update-package": "yarn dlx vp-update"
+  },
   "devDependencies": {
-    "vuepress": "^1.5.2"
-  },
-  "dependencies": {
-    "core-js": "^2.6.11",
-    "vuepress-theme-antdocs": "^1.4.6"
-  },
-  "creator": ">=2.0.0"
+    "@vuepress/bundler-vite": "^2.0.0-rc.7",
+    "@vuepress/theme-default": "^2.0.0-rc.11",
+    "vue": "^3.4.0",
+    "vuepress": "^2.0.0-rc.7",
+    "@vuepress/plugin-blog": "^2.0.0-rc.11"
+  }
 }
