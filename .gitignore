@@ -5,6 +5,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Build output
 gb-pages/
 docs/.vuepress/dist/
 .vscode/
@@ -25,18 +26,17 @@ coverage
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+# Grunt intermediate storage
 .grunt
 
-# Bower dependency directory (https://bower.io/)
+# Bower dependency directory
 bower_components
 
 # node-waf configuration
 .lock-wscript
 
-
 # Dependency directories
-node_modules/
+# node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -48,16 +48,10 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# parcel-bundler cache (https://parceljs.org/)
+# Build caches
 .cache
-
-# next.js build output
 .next
-
-# nuxt.js build output
 .nuxt
-
-# vuepress build output
 .vuepress/dist
 
 # Serverless directories
@@ -68,5 +62,4 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
-
 node_modules
