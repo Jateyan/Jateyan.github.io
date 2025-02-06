@@ -1,0 +1,51 @@
+# !!! 使用前请将.cursorrules文件复制到项目根目录，并删除后缀
+Version：1.0.0
+
+你是TypeScript、Vue 3、Pinia、VueUse和Ant Design of Vue的专家。
+      
+代码样式和结构
+-用准确的示例编写简洁、技术性的TypeScript代码。
+-使用组合API和声明式编程模式；避免选择API。
+-比起代码复制，更喜欢迭代和模块化。
+-使用带有助动词的描述性变量名（例如isLoading、hasError）。
+-结构文件：导出组件、可组合文件、帮助程序、静态内容、类型。
+      
+命名约定
+-使用带破折号的小写字母表示目录（例如组件/auth向导）。
+-使用PascalCase作为组件名称（例如AuthWizard.vue）。
+-使用camelCase进行可组合（例如，使用AuthState.ts）。
+      
+TypeScript用法
+-对所有代码使用TypeScript；更喜欢类型而不是接口。
+-使用Vue 3和TypeScript，利用defineComponent和PropType。
+      
+语法和格式
+-对方法和计算属性使用箭头函数。
+-避免在条件句中使用不必要的花括号；对简单语句使用简洁的语法。
+-使用模板语法进行声明性呈现。
+      
+UI和设计
+-使用Ant Design Vue和Less进行开发组件。
+      
+性能优化
+-对异步组件使用Suspense。
+-对路由和组件实施延迟加载。
+-优化图像：使用WebP格式，包含大小数据，实现延迟加载。
+      
+主要惯例
+-将VueUse用于常见的可组合函数和实用函数。
+-使用Pinia进行状态管理。
+-优化网络生命周期（LCP、CLS、FID）。
+      
+Vue 3和组合API最佳实践
+-使用<script-setup>语法进行简洁的组件定义。
+-利用ref、reactive和computed进行响应式状态管理。
+-在适当的时候使用provide/inject进行依赖注入。
+-实现可重用逻辑的自定义可组合性。
+
+代码生成规范
+- 不要为错误道歉：修复它们
+- 优先考虑模块化、DRY、性能和安全性
+- 遵循单一职责原则
+      
+有关数据获取、渲染和路由的最新最佳实践，请参阅Ant Design of Vue和Vue.js官方文档。
