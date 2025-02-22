@@ -19,8 +19,34 @@ export default defineUserConfig({
         link: "/front/",
         children: [
           {
-            text: "angular开发实战",
-            link: "/front/angular-note/angular-enterprise-development", // 建议修改为英文命名,避免中文和空格导致的路径问题
+            text: "html",
+            link: "/front/html/",
+          },
+          {
+            text: "js",
+            link: "/front/js/",
+          },
+          {
+            text: "css",
+            link: "/front/css/",
+          },
+          {
+            text: "网络",
+            link: "/front/network/",
+          },
+          {
+            text: "面试",
+            link: "/front/interview/",
+          },
+          {
+            text: "课堂笔记",
+            link: "/front/class-note/",
+            children: [
+              {
+                text: "angular开发实战",
+                link: "/front/class-note/angular-note/angular开发实战", // 建议修改为英文命名,避免中文和空格导致的路径问题
+              },
+            ],
           },
         ],
       },
