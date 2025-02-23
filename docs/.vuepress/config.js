@@ -2,73 +2,17 @@ import { blogPlugin } from "@vuepress/plugin-blog";
 import { defaultTheme } from "@vuepress/theme-default";
 import { defineUserConfig } from "vuepress";
 import { viteBundler } from "@vuepress/bundler-vite";
+import { docsearchPlugin } from '@vuepress/plugin-docsearch'
+import { nprogressPlugin } from '@vuepress/plugin-nprogress'
+import { navbar } from './configs/navbar'
 
 export default defineUserConfig({
-  lang: "en-US",
+  lang: "zh-CN",
   title: "柠檬小站",
-  description: "个人记录博客",
+  description: "专注全栈开发与技术分享",
   theme: defaultTheme({
     logo: "https://vuejs.press/images/hero.png",
-    navbar: [
-      {
-        text: "首页",
-        link: "/",
-      },
-      {
-        text: "课程",
-        link: "/course/",
-        children: [
-          {
-            text: "angular开发实战",
-            link: "/course/angular-note/angular开发实战", // 建议修改为英文命名,避免中文和空格导致的路径问题
-          },
-        ],
-      },
-      {
-        text: "前端",
-        link: "/front/",
-        children: [
-          {
-            text: "html",
-            link: "/front/html/",
-          },
-          {
-            text: "js",
-            link: "/front/js/",
-          },
-          {
-            text: "css",
-            link: "/front/css/",
-          },
-          {
-            text: "网络",
-            link: "/front/network/",
-          },
-        ],
-      },
-      {
-        text: "面试",
-        link: "/interview/",
-        children: [
-          {
-            text: "网络",
-            link: "/interview/network/",
-          },
-        ],
-      },
-      {
-        text: "AI",
-        link: "/ai/",
-      },
-      {
-        text: "其它",
-        link: "/other/",
-      },
-      {
-        text: "工具",
-        link: "/tool/",
-      },
-    ],
+    navbar,
   }),
 
   plugins: [
@@ -165,6 +109,21 @@ export default defineUserConfig({
       // ],
       // hotReload: true,
     }),
+    '@vuepress/plugin-external-link-icon',
+    '@vuepress/plugin-container',
+    docsearchPlugin({
+      locales: {
+        '/': {
+          placeholder: '搜索文档',
+          translations: {
+            button: {
+              buttonText: '搜索文档',
+            },
+          },
+        },
+      },
+    }),
+    nprogressPlugin(),
   ],
 
   bundler: viteBundler(),
