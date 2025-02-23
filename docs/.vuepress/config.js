@@ -15,6 +15,16 @@ export default defineUserConfig({
         link: "/",
       },
       {
+        text: "课程",
+        link: "/course/",
+        children: [
+          {
+            text: "angular开发实战",
+            link: "/course/angular-note/angular开发实战", // 建议修改为英文命名,避免中文和空格导致的路径问题
+          },
+        ],
+      },
+      {
         text: "前端",
         link: "/front/",
         children: [
@@ -34,21 +44,21 @@ export default defineUserConfig({
             text: "网络",
             link: "/front/network/",
           },
+        ],
+      },
+      {
+        text: "面试",
+        link: "/interview/",
+        children: [
           {
-            text: "面试",
-            link: "/front/interview/",
-          },
-          {
-            text: "课堂笔记",
-            link: "/front/class-note/",
-            children: [
-              {
-                text: "angular开发实战",
-                link: "/front/class-note/angular-note/angular开发实战", // 建议修改为英文命名,避免中文和空格导致的路径问题
-              },
-            ],
+            text: "网络",
+            link: "/interview/network/",
           },
         ],
+      },
+      {
+        text: "AI",
+        link: "/ai/",
       },
       {
         text: "其它",
@@ -58,14 +68,6 @@ export default defineUserConfig({
         text: "工具",
         link: "/tool/",
       },
-      // {
-      //   text: '',
-      //   link: '/tag/',
-      // },
-      // {
-      //   text: 'Timeline',
-      //   link: '/timeline/',
-      // },
     ],
   }),
 
