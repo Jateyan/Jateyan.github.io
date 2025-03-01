@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en-US">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="generator" content="VuePress 2.0.0-rc.18" />
+    <meta name="generator" content="VuePress 2.0.0-rc.20" />
     <style>
       :root {
         --vp-c-bg: #fff;
@@ -19,25 +19,25 @@
       }
     </style>
     <script>
-      const userMode = localStorage.getItem('vuepress-color-scheme')
-      const systemDarkMode =
+      const useChoice = localStorage.getItem('vuepress-color-scheme')
+      const systemStatus =
         'matchMedia' in window
           ? window.matchMedia('(prefers-color-scheme: dark)').matches
           : false
 
-      if (userMode === 'light') {
+      if (useChoice === 'light') {
         document.documentElement.dataset.theme = 'light'
-      } else if (userMode === 'dark' || systemDarkMode) {
+      } else if (useChoice === 'dark' || systemStatus) {
         document.documentElement.dataset.theme = 'dark'
       }
     </script>
-    <title>柠檬小站</title><meta name="description" content="个人记录博客">
-    <link rel="preload" href="/assets/style-g2xnQgbE.css" as="style"><link rel="stylesheet" href="/assets/style-g2xnQgbE.css">
-    <link rel="modulepreload" href="/assets/app-D3boAW2v.js"><link rel="modulepreload" href="/assets/404.html-ocgO6IXb.js">
-    <link rel="prefetch" href="/assets/index.html-AMfilSgQ.js" as="script"><link rel="prefetch" href="/assets/get-started.html-CWjP0_r5.js" as="script"><link rel="prefetch" href="/assets/浏览器原理.html-CAuvOYSO.js" as="script"><link rel="prefetch" href="/assets/archive1.html-DAv0-uWE.js" as="script"><link rel="prefetch" href="/assets/archive2.html-JkUnmaVC.js" as="script"><link rel="prefetch" href="/assets/article1.html-rPtoGBac.js" as="script"><link rel="prefetch" href="/assets/article10.html-CW2S499u.js" as="script"><link rel="prefetch" href="/assets/article11.html-CK3Dh4K-.js" as="script"><link rel="prefetch" href="/assets/article12.html-mhlNxJLV.js" as="script"><link rel="prefetch" href="/assets/article2.html-C8jFHVhG.js" as="script"><link rel="prefetch" href="/assets/article3.html-CHpUcg3P.js" as="script"><link rel="prefetch" href="/assets/article4.html-B6UtOcw0.js" as="script"><link rel="prefetch" href="/assets/article5.html-dE16YhVa.js" as="script"><link rel="prefetch" href="/assets/article6.html-J5EUWTys.js" as="script"><link rel="prefetch" href="/assets/article7.html-vdbMwqV4.js" as="script"><link rel="prefetch" href="/assets/article8.html-De88FgxN.js" as="script"><link rel="prefetch" href="/assets/article9.html-k48uTX8L.js" as="script"><link rel="prefetch" href="/assets/sticky.html-CHmJdzrM.js" as="script"><link rel="prefetch" href="/assets/sticky2.html-UlSI8lSn.js" as="script"><link rel="prefetch" href="/assets/angular开发实战.html-CXLmWqKM.js" as="script"><link rel="prefetch" href="/assets/flex.html-BqiZf3F8.js" as="script"><link rel="prefetch" href="/assets/IntersectionObserver.html-BKqqLRBo.js" as="script"><link rel="prefetch" href="/assets/事件循环机制.html-DoSKTnRV.js" as="script"><link rel="prefetch" href="/assets/浏览器原理.html-m0TcGbrd.js" as="script">
+    <title>柠檬小站</title><meta name="description" content="专注全栈开发与技术分享">
+    <link rel="preload" href="/assets/style-B_v93rH0.css" as="style"><link rel="stylesheet" href="/assets/style-B_v93rH0.css">
+    <link rel="modulepreload" href="/assets/app-DKa6BX99.js"><link rel="modulepreload" href="/assets/404.html-Cf8A7Q7P.js">
+    <link rel="prefetch" href="/assets/index.html-DPWmVEiK.js" as="script"><link rel="prefetch" href="/assets/get-started.html-BtwclktF.js" as="script"><link rel="prefetch" href="/assets/python-tutorial.html-BBChSmmk.js" as="script"><link rel="prefetch" href="/assets/浏览器原理.html-DcY6spuU.js" as="script"><link rel="prefetch" href="/assets/archive1.html-BrShkuY8.js" as="script"><link rel="prefetch" href="/assets/archive2.html-BGcArg3B.js" as="script"><link rel="prefetch" href="/assets/article1.html-CXl4v4bf.js" as="script"><link rel="prefetch" href="/assets/article10.html-4vkGhp0C.js" as="script"><link rel="prefetch" href="/assets/article11.html-oNIBqhhA.js" as="script"><link rel="prefetch" href="/assets/article12.html-CefxzcK6.js" as="script"><link rel="prefetch" href="/assets/article2.html-C4PESaIb.js" as="script"><link rel="prefetch" href="/assets/article3.html--imnuz24.js" as="script"><link rel="prefetch" href="/assets/article4.html-CKENhfzz.js" as="script"><link rel="prefetch" href="/assets/article5.html-CVM87GeL.js" as="script"><link rel="prefetch" href="/assets/article6.html-Dsx-v27G.js" as="script"><link rel="prefetch" href="/assets/article7.html-LEqIu4Q2.js" as="script"><link rel="prefetch" href="/assets/article8.html-CKFuJlcP.js" as="script"><link rel="prefetch" href="/assets/article9.html-B2rJWON4.js" as="script"><link rel="prefetch" href="/assets/sticky.html-LNQnCkXT.js" as="script"><link rel="prefetch" href="/assets/sticky2.html-CIOTOQdQ.js" as="script"><link rel="prefetch" href="/assets/angular开发实战.html-D-rfCKCt.js" as="script"><link rel="prefetch" href="/assets/flex.html-BMaF6ID9.js" as="script"><link rel="prefetch" href="/assets/IntersectionObserver.html-ah-Nyt4j.js" as="script"><link rel="prefetch" href="/assets/事件循环机制.html-kQ2Bx5C0.js" as="script"><link rel="prefetch" href="/assets/浏览器原理.html-CYopymJ2.js" as="script"><link rel="prefetch" href="/assets/index-B-M8YVCw.js" as="script">
   </head>
   <body>
-    <div id="app"><!--[--><div class="vp-theme-container" vp-container data-v-463c2c5d><main class="page" data-v-463c2c5d><div class="theme-default-content" vp-content data-v-463c2c5d><h1 data-v-463c2c5d>404</h1><blockquote data-v-463c2c5d>There&#39;s nothing here.</blockquote><a class="route-link" href="/" data-v-463c2c5d>Take me home</a></div></main></div><!--[--><!----><!--]--><!--]--></div>
-    <script type="module" src="/assets/app-D3boAW2v.js" defer></script>
+    <div id="app"><!--[--><div class="vp-theme-container" vp-container data-v-2099bcbb><main class="page" data-v-2099bcbb><div vp-content data-v-2099bcbb><h1 data-v-2099bcbb>404</h1><blockquote data-v-2099bcbb>That&#39;s a Four-Oh-Four.</blockquote><a class="route-link" href="/" data-v-2099bcbb>Take me home</a></div></main></div><!--[--><!----><!--]--><!--]--></div>
+    <script type="module" src="/assets/app-DKa6BX99.js" defer></script>
   </body>
 </html>
