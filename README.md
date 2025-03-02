@@ -1,39 +1,42 @@
-# `Vuepress`博客源码
+# my-vuepress-site
 
-> 配套视频地址：https://www.bilibili.com/video/BV17t41177cr
->
-> github预览地址：https://it235.github.io/
->
-> gitee预览地址：https://it235.gitee.io/
+The Site is generated using [vuepress](https://vuepress.vuejs.org/) and [vuepress-theme-plume](https://github.com/pengzhanbo/vuepress-theme-plume)
 
-> 君哥博客地址：https://www.it235.com/
+## Install
 
-
-
-**白嫖有罪，如有帮助，点赞收藏！**
-
-
-
-### 运行
-
-```
-# 打开cmd 全局安装yarn
-$ npm i -g yarn
-
-# 设置yarn淘宝源，使用npm的同学，也是可以设置淘宝源
-$ yarn config set registry https://registry.npm.taobao.org
-
-$ git clone https://github.com/it235/it235-vuepress.git
-
-# 打开CMD命令行窗口
-$ cd it235-vuepress
-
-# 安装vuepress
-$ yarn add -D vuepress 或 npm install -g vuepress
-
-$ yarn docs:dev  或 npm run docs:dev
+```sh
+npm i
 ```
 
-### 预览
+## Usage
 
-![1563786698861](./docs/.vuepress/public/view.png)
+```sh
+# start dev server
+npm run docs:dev
+# build for production
+npm run docs:build
+# preview production build in local
+npm run docs:preview
+# update vuepress and theme
+npm run vp-update
+```
+
+## Deploy to GitHub Pages
+
+The plume theme has been created with GitHub Actions: `.github/workflows/docs-deploy.yml`. You also need to make the following settings in the GitHub repository:
+
+- [ ] `settings > Actions > General`, Scroll to the bottom of the page, under `Workflow permissions`, check `Read and write permissions`, and click the save button.
+
+- [ ] `settings > Pages`, In `Build and deployment`, select `Deploy from a branch` for `Source`, choose `gh-pages` for `Branch`, and click the save button.
+  (The `gh-pages` branch may not exist upon first creation. You can complete the above setup first, push the code to the main branch, wait for `github actions` to finish, and then proceed with the setup.)
+
+- [ ] Modify the `base` option in `docs/.vuepress/config.ts`:
+  - If you are planning to deploy to `https://<USERNAME>.github.io/`, you can skip this step as `base` defaults to `"/"`.
+  - If you are planning to deploy to `https://<USERNAME>.github.io/<REPO>/`, meaning your repository URL is `https://github.com/<USERNAME>/<REPO>`, set `base` to `"/<REPO>/"`.
+
+To customize a domain name, please refer to [Github Pages](https://docs.github.com/zh/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages)
+
+## Documents
+
+- [vuepress](https://vuepress.vuejs.org/)
+- [vuepress-theme-plume](https://theme-plume.vuejs.press/)

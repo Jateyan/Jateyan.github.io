@@ -1,110 +1,180 @@
-const themeConfig = require('./config/theme/index.js')
-const navConf = require('./config/nav')
-const sidebarConf = require('./config/sidebar')
-const pluginsConf = require('./config/plugins/index')
-module.exports = {
-    //注意，此处需要填写你部署在nginx下的文件夹名称，如果是根目录，那么可以注释掉此行，注释掉后本地打开index.html无法访问
-    base: "/Jateyan/",
-    title: "君哥聊编程",
-    description: '点赞、转发、收藏',
-    // dest: './dist',
-    port: '7777',
-    head: [
-        ['link', { rel: 'icon', href: '/img/favicon.ico' }],
-		['meta', { name: 'keywords', content: '君哥聊编程,vuepress,自建博客,君哥' }],
-		['meta', { name: 'description', content: '专属于自学者的在线学习平台,这里有编程领域最完善最「体系化的」Java学习视频、如果你是小白快加入我们一起学最全最「体系化的」java知识吧，官方交流QQ群：827553720' }],
-        ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
-        ["meta", {name: "robots", content: "all"}],
-        ["meta", {name: "author", content: "君哥"}],
-		["link", { rel: "stylesheet", href: "/css/style.css" }],//显示nav小logo
-		["script", { charset: "utf-8", src: "/js/custom.js" }],//加载右侧菜单栏图片
-        // 百度统计
-        /*
-        ['script', {}, `
-            var _hmt = _hmt || [];
-            (function() {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?e312f85a409131e18146064e62b19798";
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(hm, s);
-            })();
-        `],
-        */
-    ],
-    theme: 'reco',
-    themeConfig: {
-        type: 'blog',
-        smoothScroll: true,
-        // 博客设置
-		/*
-        blogConfig: {
-            category: {
-                location: 2, // 在导航栏菜单中所占的位置，默认2
-                text: '分类' // 默认 “分类”
-            },
-            tag: {
-                location: 3, // 在导航栏菜单中所占的位置，默认3
-                text: '标签' // 默认 “标签”
-            }
-        },*/
-        /*
-        valineConfig: {
-            // your appId
-            appId: 'AwhnPnTxxzGzoHsz',
-            // your appKey
-            appKey: '0M6f1PazzzalVIukU',
-            recordIP:true,
-            placeholder:'来都来了，冒个泡再走呗...',
-            visitor:true,
-        },
-        */
-        authorAvatar: '/avatar.png',
-        // 最后更新时间
-        lastUpdated: '2021-04-07', // string | boolean
-        //repo: 'it235',
-        // 如果你的文档不在仓库的根部
-        //docsDir: 'docs',
-        // 可选，默认为 master
-        //docsBranch: 'source',
-        //editLinks: true,
-        //editLinkText: '在 GitHub 上编辑此页！',
-        // 作者
-        author: '君哥',
-        // 项目开始时间
-        startYear: '2022',
-        nav: navConf,
-        sidebar: sidebarConf,
-		sidebarDepth: 2,
-        // 自动形成侧边导航
-		sidebar: 'auto',
-        // logo: '/head.png',
-        // 搜索设置
-        search: true,
-        searchMaxSuggestions: 10,
-        // ICP备案
-        record: '沪ICP备xxxxx号-6',
-        recordLink: 'https://beian.miit.gov.cn/',
-		// 公网安备备案
-        cyberSecurityRecord: '沪公网安备 xxxxxxx号',
-        cyberSecurityLink: 'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=xxx05177',
-		//友链
-        friendLink: [
-            {
-                title: '君哥聊编程',
-                desc: 'Enjoy when you can, and endure when you must.',
-                email: 'xxx@qq.com',
-                link: 'https://www.it235.com'
-            },
-            {
-                title: '君哥的课堂',
-                desc: '君哥的课堂',
-                avatar: "https://vuepress-theme-reco.recoluan.com/icon_vuepress_reco.png",
-                link: 'https://how.ke.qq.com/'
-            },
-        ]
+import { viteBundler } from '@vuepress/bundler-vite'
+import { defineUserConfig } from 'vuepress'
+import { plumeTheme } from 'vuepress-theme-plume'
+
+export default defineUserConfig({
+  base: '/',
+  lang: 'zh-CN',
+  title: '柠檬小站',
+  description: '专注全栈开发与技术分享',
+
+  head: [
+    // 配置站点图标
+    ['link', { rel: 'icon', type: 'image/png', href: 'https://theme-plume.vuejs.press/favicon-32x32.png' }],
+  ],
+
+  bundler: viteBundler(),
+  shouldPrefetch: false, // 站点较大，页面数量较多时，不建议启用
+
+  theme: plumeTheme({
+    /* 添加您的部署域名, 有助于 SEO, 生成 sitemap */
+    // hostname: 'https://your_site_url',
+
+    /* 文档仓库配置，用于 editLink */
+    // docsRepo: '',
+    // docsDir: 'docs',
+    // docsBranch: '',
+
+    /* 页内信息 */
+    // editLink: true,
+    // lastUpdated: true,
+    // contributors: true,
+    // changelog: false,
+
+    /**
+     * 博客
+     * @see https://theme-plume.vuejs.press/config/basic/#blog
+     */
+    // blog: false, // 禁用博客
+    // blog: {
+    //   postList: true, // 是否启用文章列表页
+    //   tags: true, // 是否启用标签页
+    //   archives: true, // 是否启用归档页
+    //   categories: true, // 是否启用分类页
+    //   postCover: 'right', // 文章封面位置
+    //   pagination: 15, // 每页显示文章数量
+    // },
+
+    /* 博客文章页面链接前缀 */
+    article: '/article/',
+
+    /**
+     * 编译缓存，加快编译速度
+     * @see https://theme-plume.vuejs.press/config/basic/#cache
+     */
+    cache: 'filesystem',
+
+    /**
+     * 为 markdown 文件自动添加 frontmatter 配置
+     * @see https://theme-plume.vuejs.press/config/basic/#autofrontmatter
+     */
+    // autoFrontmatter: {
+    //   permalink: true,  // 是否生成永久链接
+    //   createTime: true, // 是否生成创建时间
+    //   title: true,      // 是否生成标题
+    // },
+
+    plugins: {
+      /**
+       * Shiki 代码高亮
+       * @see https://theme-plume.vuejs.press/config/plugins/code-highlight/
+       */
+      // shiki: {
+      //   // 强烈建议预设代码块高亮语言，插件默认加载所有语言会产生不必要的时间开销
+      //   languages: ['shell', 'bash', 'typescript', 'javascript'],
+      //   twoslash: true, // 启用 twoslash
+      //   whitespace: true, // 启用 空格/Tab 高亮
+      //   lineNumbers: true, // 启用行号
+      // },
+
+      /* 本地搜索, 默认启用 */
+      // search: true,
+
+      /**
+       * Algolia DocSearch
+       * 启用此搜索需要将 本地搜索 search 设置为 false
+       * @see https://theme-plume.vuejs.press/config/plugins/search/#algolia-docsearch
+       */
+      // docsearch: {
+      //   appId: '',
+      //   apiKey: '',
+      //   indexName: '',
+      // },
+
+      /* 文章字数统计、阅读时间，设置为 false 则禁用 */
+      // readingTime: true,
+
+      /**
+       * markdown enhance
+       * @see https://theme-plume.vuejs.press/config/plugins/markdown-enhance/
+       */
+      // markdownEnhance: {
+      //   chartjs: true,
+      //   echarts: true,
+      //   mermaid: true,
+      //   flowchart: true,
+      // },
+
+      /**
+       *  markdown power
+       * @see https://theme-plume.vuejs.press/config/plugin/markdown-power/
+       */
+      markdownPower: {
+        // abbr: true,         // 启用 abbr 语法  *[label]: content
+        // annotation: true,   // 启用 annotation 语法  [+label]: content
+        // pdf: true,          // 启用 PDF 嵌入 @[pdf](/xxx.pdf)
+        // caniuse: true,      // 启用 caniuse 语法  @[caniuse](feature_name)
+        // plot: true,         // 启用隐秘文本语法 !!xxxx!!
+        // bilibili: true,     // 启用嵌入 bilibili视频 语法 @[bilibili](bid)
+        // youtube: true,      // 启用嵌入 youtube视频 语法 @[youtube](video_id)
+        // artPlayer: true,    // 启用嵌入 artPlayer 本地视频 语法 @[artPlayer](url)
+        // audioReader: true,  // 启用嵌入音频朗读功能 语法 @[audioReader](url)
+        // icons: true,        // 启用内置图标语法  :[icon-name]:
+        // codepen: true,      // 启用嵌入 codepen 语法 @[codepen](user/slash)
+        // replit: true,       // 启用嵌入 replit 语法 @[replit](user/repl-name)
+        // codeSandbox: true,  // 启用嵌入 codeSandbox 语法 @[codeSandbox](id)
+        // jsfiddle: true,     // 启用嵌入 jsfiddle 语法 @[jsfiddle](user/id)
+        // npmTo: true,        // 启用 npm-to 容器  ::: npm-to
+        // demo: true,         // 启用 demo 容器  ::: demo
+        // repl: {             // 启用 代码演示容器
+        //   go: true,         // ::: go-repl
+        //   rust: true,       // ::: rust-repl
+        //   kotlin: true,     // ::: kotlin-repl
+        // },
+        // imageSize: 'local', // 启用 自动填充 图片宽高属性，避免页面抖动
+      },
+
+      /**
+       * 在 Markdown 文件中导入其他 markdown 文件内容。
+       * @see https://theme-plume.vuejs.press/guide/markdown/include/
+       */
+      // markdownInclude: true,
+
+      /**
+       * Markdown 数学公式
+       * @see https://theme-plume.vuejs.press/config/plugins/markdown-math/
+       */
+      // markdownMath: {
+      //   type: 'katex',
+      // },
+
+      /**
+       * 水印
+       * @see https://theme-plume.vuejs.press/guide/features/watermark/
+       */
+      // watermark: true,
+
+      /**
+       * 评论 comments
+       * @see https://theme-plume.vuejs.press/guide/features/comments/
+       */
+      // comment: {
+      //   provider: '', // "Artalk" | "Giscus" | "Twikoo" | "Waline"
+      //   comment: true,
+      //   repo: '',
+      //   repoId: '',
+      //   category: '',
+      //   categoryId: '',
+      //   mapping: 'pathname',
+      //   reactionsEnabled: true,
+      //   inputPosition: 'top',
+      // },
     },
-    markdown: {
-        lineNumbers: true
-    },
-    plugins: pluginsConf
-}
+
+    /**
+     * 加密功能
+     * @see https://theme-plume.vuejs.press/guide/features/encryption/
+     */
+    // encrypt: {},
+  }),
+})
