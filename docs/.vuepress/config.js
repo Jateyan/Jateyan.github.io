@@ -177,4 +177,10 @@ export default defineUserConfig({
      */
     // encrypt: {},
   }),
+
+  // 添加以下配置来确保PDF文件被正确复制到输出目录
+  extraWatchFiles: [
+    // ... 现有文件 ...
+    'docs/pdfs/'
+  ],
 })

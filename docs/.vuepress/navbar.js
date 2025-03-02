@@ -60,4 +60,8 @@ export const navbar = defineNavbarConfig([
   //   text: 'Python教程',
   //   items:[]
   // }
+  {
+    text: 'PDF文档',
+    link: '/pdfs/',
+  },
 ])
