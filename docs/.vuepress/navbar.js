@@ -42,6 +42,10 @@ export const navbar = defineNavbarConfig([
         text: "网络",
         link: "/custom/interview/network/",
       },
+      {
+        text: "angular",
+        link: "/custom/interview/angular/index.md",
+      },
     ],
   },
   // {

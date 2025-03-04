@@ -1,4 +1,4 @@
-import comp from "E:/Jateyan.github.io/docs/.vuepress/.temp/pages/demo/index.html.vue"
+import comp from "F:/project/Jateyan.github.io/docs/.vuepress/.temp/pages/demo/index.html.vue"
 const data = JSON.parse("{\"path\":\"/demo/\",\"title\":\"Demo\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"Demo\",\"createTime\":\"2025/03/02 10:34:45\",\"permalink\":\"/demo/\",\"gitInclude\":[]},\"headers\":[],\"readingTime\":{\"minutes\":0.04,\"words\":13},\"filePathRelative\":\"notes/demo/README.md\"}")
 export { comp, data }
 

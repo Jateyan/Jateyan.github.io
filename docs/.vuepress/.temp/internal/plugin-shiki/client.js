@@ -1,6 +1,6 @@
 
-import { useCopyCode } from 'E:/Jateyan.github.io/node_modules/@vuepress-plume/plugin-shikiji/lib/client/composables/copy-code.js'
-import { useCollapsedLines } from 'E:/Jateyan.github.io/node_modules/@vuepress-plume/plugin-shikiji/lib/client/composables/collapsed-lines.js'
+import { useCopyCode } from 'F:/project/Jateyan.github.io/node_modules/@vuepress-plume/plugin-shikiji/lib/client/composables/copy-code.js'
+import { useCollapsedLines } from 'F:/project/Jateyan.github.io/node_modules/@vuepress-plume/plugin-shikiji/lib/client/composables/collapsed-lines.js'
 
 export default {
   

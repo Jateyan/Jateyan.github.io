@@ -1,4 +1,4 @@
-import comp from "E:/Jateyan.github.io/docs/.vuepress/.temp/pages/pdfs/index.html.vue"
+import comp from "F:/project/Jateyan.github.io/docs/.vuepress/.temp/pages/pdfs/index.html.vue"
 const data = JSON.parse("{\"path\":\"/pdfs/\",\"title\":\"PDF文档库\",\"lang\":\"zh-CN\",\"frontmatter\":{\"gitInclude\":[]},\"headers\":[],\"readingTime\":{\"minutes\":0.35,\"words\":106},\"filePathRelative\":\"pdfs/README.md\",\"categoryList\":[{\"id\":\"8fa516\",\"sort\":10000,\"name\":\"pdfs\"}]}")
 export { comp, data }
 

@@ -1,5 +1,5 @@
-import comp from "E:/Jateyan.github.io/docs/.vuepress/.temp/pages/article/pwh98lnr/index.html.vue"
-const data = JSON.parse("{\"path\":\"/article/pwh98lnr/\",\"title\":\"Markdown\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"Markdown\",\"tags\":[\"markdown\"],\"createTime\":\"2025/03/02 10:34:45\",\"permalink\":\"/article/pwh98lnr/\",\"gitInclude\":[]},\"headers\":[],\"readingTime\":{\"minutes\":2.51,\"words\":753},\"filePathRelative\":\"preview/markdown.md\",\"categoryList\":[{\"id\":\"5ebeb6\",\"sort\":10001,\"name\":\"preview\"}]}")
+import comp from "F:/project/Jateyan.github.io/docs/.vuepress/.temp/pages/article/pwh98lnr/index.html.vue"
+const data = JSON.parse("{\"path\":\"/article/pwh98lnr/\",\"title\":\"Markdown\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"Markdown\",\"tags\":[\"markdown\"],\"createTime\":\"2025/03/02 10:34:45\",\"permalink\":\"/article/pwh98lnr/\",\"gitInclude\":[]},\"headers\":[],\"readingTime\":{\"minutes\":2.51,\"words\":753},\"filePathRelative\":\"preview/markdown.md\",\"categoryList\":[{\"id\":\"5ebeb6\",\"sort\":10003,\"name\":\"preview\"}]}")
 export { comp, data }
 
 if (import.meta.webpackHot) {
