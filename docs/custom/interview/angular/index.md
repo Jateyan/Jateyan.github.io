@@ -1,4 +1,4 @@
-# Angular 高级开发核心大纲
+# Angular 核心大纲
 
 ## 1. Angular 核心概念
 
@@ -4655,30 +4655,1819 @@
 
 #### 1.2.6 Shadow DOM 和 View Encapsulation
 
+- **Shadow DOM 概念与原理**
+
+  ```typescript
+  // Shadow DOM 是 Web Components 标准的核心部分
+  // 它允许将隐藏的 DOM 树附加到常规 DOM 树中的元素上
+  // 主要特点:
+  // 1. DOM 隔离 - Shadow DOM 内部的元素不会影响外部
+  // 2. 样式隔离 - Shadow DOM 内的样式不会泄漏到外部
+  // 3. 简化 CSS - 可以使用更简单的选择器而不担心冲突
+  // 4. 组合 - 可以将多个 Shadow DOM 和常规 DOM 组合在一起
+  ```
+
+- **Angular 中的视图封装模式**
+
+  ```typescript
+  // Angular 提供了三种视图封装策略，通过 @Component 装饰器的 encapsulation 属性设置
+  
+  // 1. ViewEncapsulation.Emulated (默认)
+  @Component({
+    selector: 'app-emulated',
+    template: `<h2>Emulated Encapsulation</h2>
+               <p>This component uses emulated encapsulation</p>`,
+    styles: [`
+      h2 { color: red; }
+      p { font-style: italic; }
+    `],
+    encapsulation: ViewEncapsulation.Emulated
+  })
+  export class EmulatedComponent { }
+  // 特点:
+  // - 模拟 Shadow DOM 的行为
+  // - 通过为元素添加特殊属性选择器实现样式隔离
+  // - 兼容性最好，适用于所有浏览器
+  // - 编译后的 HTML 会包含类似 _ngcontent-lmn-c12 的属性
+  
+  // 2. ViewEncapsulation.ShadowDom
+  @Component({
+    selector: 'app-shadow-dom',
+    template: `<h2>Shadow DOM Encapsulation</h2>
+               <p>This component uses real Shadow DOM</p>`,
+    styles: [`
+      h2 { color: blue; }
+      p { font-weight: bold; }
+    `],
+    encapsulation: ViewEncapsulation.ShadowDom
+  })
+  export class ShadowDomComponent { }
+  // 特点:
+  // - 使用浏览器原生 Shadow DOM API
+  // - 完全隔离的 DOM 和 CSS
+  // - 需要浏览器支持 Shadow DOM v1 规范
+  // - 无法从外部直接访问组件内部元素
+  
+  // 3. ViewEncapsulation.None
+  @Component({
+    selector: 'app-no-encapsulation',
+    template: `<h2>No Encapsulation</h2>
+               <p>This component has no encapsulation</p>`,
+    styles: [`
+      h2 { color: green; }
+      p { text-decoration: underline; }
+    `],
+    encapsulation: ViewEncapsulation.None
+  })
+  export class NoEncapsulationComponent { }
+  // 特点:
+  // - 没有样式隔离
+  // - 组件样式会应用到整个应用
+  // - 样式会被添加到文档的 <head> 中
+  // - 适用于全局样式或主题组件
+  ```
+
+- **封装模式的选择策略**
+
+  ```typescript
+  // 选择合适的封装模式取决于以下因素:
+  
+  // 1. 组件的用途
+  //    - 可重用组件库: ViewEncapsulation.Emulated 或 ShadowDom
+  //    - 应用特定组件: 可以使用默认的 Emulated
+  //    - 全局样式组件: ViewEncapsulation.None
+  
+  // 2. 浏览器兼容性要求
+  //    - 需要最广泛兼容性: ViewEncapsulation.Emulated
+  //    - 只支持现代浏览器: 可以考虑 ViewEncapsulation.ShadowDom
+  
+  // 3. 样式复杂度
+  //    - 复杂的样式隔离需求: ViewEncapsulation.ShadowDom
+  //    - 简单的样式需求: ViewEncapsulation.Emulated 通常足够
+  
+  // 4. 与第三方库集成
+  //    - 需要访问组件内部: 避免使用 ViewEncapsulation.ShadowDom
+  //    - 需要应用全局样式: 考虑 ViewEncapsulation.None
+  ```
+
+- **样式穿透技术**
+
+  ```typescript
+  // 有时需要从父组件修改子组件的样式，可以使用以下技术:
+  
+  // 1. 使用 ::ng-deep 组合器 (不推荐，已废弃但仍可用)
+  @Component({
+    selector: 'app-parent',
+    template: `<app-child></app-child>`,
+    styles: [`
+      ::ng-deep .child-class {
+        color: red !important;
+      }
+    `]
+  })
+  
+  // 2. 使用 :host-context() 选择器
+  @Component({
+    selector: 'app-child',
+    template: `<div class="content">Child content</div>`,
+    styles: [`
+      :host-context(.theme-dark) .content {
+        background-color: #333;
+        color: white;
+      }
+    `]
+  })
+  
+  // 3. 使用 CSS 变量实现主题定制
+  @Component({
+    selector: 'app-themed',
+    template: `<div class="themed-component">Themed content</div>`,
+    styles: [`
+      .themed-component {
+        color: var(--primary-text-color, black);
+        background-color: var(--primary-bg-color, white);
+        border: 1px solid var(--border-color, #ccc);
+      }
+    `]
+  })
+  // 在父组件或全局样式中设置变量:
+  // :root {
+  //   --primary-text-color: #333;
+  //   --primary-bg-color: #f5f5f5;
+  //   --border-color: #ddd;
+  // }
+  ```
+
+- **Shadow DOM 的高级用法**
+
+  ```typescript
+  // 1. 访问 Shadow DOM 元素
+  @Component({
+    selector: 'app-shadow-access',
+    template: `
+      <div #shadowContent>Shadow DOM content</div>
+      <button (click)="modifyShadowContent()">Modify</button>
+    `,
+    encapsulation: ViewEncapsulation.ShadowDom
+  })
+  export class ShadowAccessComponent {
+    @ViewChild('shadowContent') shadowContent: ElementRef;
+    
+    modifyShadowContent() {
+      // 直接访问 Shadow DOM 中的元素
+      if (this.shadowContent && this.shadowContent.nativeElement) {
+        this.shadowContent.nativeElement.textContent = 'Modified content';
+        this.shadowContent.nativeElement.style.color = 'red';
+      }
+    }
+  }
+  
+  // 2. 从组件外部访问 Shadow DOM (需谨慎使用)
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <app-shadow-child #child></app-shadow-child>
+      <button (click)="accessChildShadowDom()">Access Child</button>
+    `
+  })
+  export class ParentComponent {
+    @ViewChild('child', { read: ElementRef }) childElem: ElementRef;
+    
+    accessChildShadowDom() {
+      // 获取子组件的 Shadow Root
+      const childElement = this.childElem.nativeElement;
+      const shadowRoot = childElement.shadowRoot;
+      
+      // 如果使用 ViewEncapsulation.ShadowDom，可以访问 shadowRoot
+      if (shadowRoot) {
+        const heading = shadowRoot.querySelector('h2');
+        if (heading) {
+          heading.style.fontSize = '24px';
+        }
+      }
+    }
+  }
+  ```
+
+- **性能考虑与最佳实践**
+
+  ```typescript
+  // 1. 性能影响
+  // - ViewEncapsulation.Emulated: 在大型应用中可能导致较大的CSS文件
+  // - ViewEncapsulation.ShadowDom: 在组件数量很多时可能有轻微性能影响
+  // - ViewEncapsulation.None: 样式冲突风险高，但CSS体积较小
+  
+  // 2. 最佳实践
+  
+  // 组件库开发
+  @Component({
+    selector: 'lib-button',
+    template: `
+      <button class="lib-btn" [class.lib-btn-primary]="primary">
+        <ng-content></ng-content>
+      </button>
+    `,
+    styles: [`
+      .lib-btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+      }
+      .lib-btn-primary {
+        background-color: var(--primary-color, #007bff);
+        color: white;
+      }
+    `],
+    encapsulation: ViewEncapsulation.ShadowDom
+  })
+  export class LibButtonComponent {
+    @Input() primary: boolean = false;
+  }
+  
+  // 应用特定组件
+  @Component({
+    selector: 'app-dashboard-widget',
+    templateUrl: './dashboard-widget.component.html',
+    styleUrls: ['./dashboard-widget.component.scss'],
+    // 使用默认的 Emulated 封装
+  })
+  export class DashboardWidgetComponent {
+    // 组件逻辑
+  }
+  
+  // 全局样式组件
+  @Component({
+    selector: 'app-theme-provider',
+    template: '<ng-content></ng-content>',
+    styles: [`
+      /* 全局主题变量 */
+      :host {
+        --primary-color: #3f51b5;
+        --secondary-color: #ff4081;
+        --text-color: #333;
+        --bg-color: #f5f5f5;
+      }
+      
+      /* 暗黑模式 */
+      :host(.dark-theme) {
+        --primary-color: #7986cb;
+        --secondary-color: #ff80ab;
+        --text-color: #eee;
+        --bg-color: #303030;
+      }
+    `],
+    encapsulation: ViewEncapsulation.None
+  })
+  export class ThemeProviderComponent {
+    @Input() set darkMode(value: boolean) {
+      if (value) {
+        this.elementRef.nativeElement.classList.add('dark-theme');
+      } else {
+        this.elementRef.nativeElement.classList.remove('dark-theme');
+      }
+    }
+    
+    constructor(private elementRef: ElementRef) {}
+  }
+  ```
+
 ### 1.3 指令（Directives）
 
 #### 1.3.1 结构型指令（*ngIf, *ngFor, *ngSwitch）
+
+- **结构型指令基础**
+
+  ```typescript
+  // 结构型指令的星号(*)语法糖
+  // 这两种写法是等价的:
+  
+  // 简写形式（使用*语法糖）
+  <div *ngIf="condition">内容</div>
+  
+  // 完整形式（ng-template）
+  <ng-template [ngIf]="condition">
+    <div>内容</div>
+  </ng-template>
+  ```
+
+- ***ngIf 指令详解**
+
+  ```typescript
+  // 1. 基本用法
+  @Component({
+    selector: 'app-if-demo',
+    template: `
+      <div *ngIf="isVisible">这个内容会根据条件显示或隐藏</div>
+      <button (click)="toggleVisibility()">切换显示</button>
+    `
+  })
+  export class IfDemoComponent {
+    isVisible = true;
+    
+    toggleVisibility() {
+      this.isVisible = !this.isVisible;
+    }
+  }
+  
+  // 2. 带else条件
+  @Component({
+    selector: 'app-if-else-demo',
+    template: `
+      <div *ngIf="isLoggedIn; else loggedOut">
+        欢迎回来，{{ username }}！
+      </div>
+      
+      <ng-template #loggedOut>
+        请登录以继续操作。
+      </ng-template>
+    `
+  })
+  export class IfElseDemoComponent {
+    isLoggedIn = false;
+    username = '张三';
+  }
+  
+  // 3. 带then和else条件
+  @Component({
+    selector: 'app-if-then-else-demo',
+    template: `
+      <div *ngIf="userRole === 'admin'; then adminTpl else userTpl"></div>
+      
+      <ng-template #adminTpl>
+        <div class="admin-panel">管理员面板</div>
+      </ng-template>
+      
+      <ng-template #userTpl>
+        <div class="user-view">普通用户视图</div>
+      </ng-template>
+    `
+  })
+  export class IfThenElseDemoComponent {
+    userRole = 'user'; // 'admin' 或 'user'
+  }
+  
+  // 4. 使用as存储条件结果
+  @Component({
+    selector: 'app-if-as-demo',
+    template: `
+      <div *ngIf="userInfo$ | async as user; else loading">
+        <h2>{{ user.name }}</h2>
+        <p>Email: {{ user.email }}</p>
+      </div>
+      
+      <ng-template #loading>
+        <div class="loading">加载用户信息中...</div>
+      </ng-template>
+    `
+  })
+  export class IfAsDemoComponent {
+    userInfo$ = this.userService.getUserInfo();
+    
+    constructor(private userService: UserService) {}
+  }
+  ```
+
+- ***ngFor 指令详解**
+
+  ```typescript
+  // 1. 基本用法
+  @Component({
+    selector: 'app-for-demo',
+    template: `
+      <ul>
+        <li *ngFor="let item of items">{{ item.name }}</li>
+      </ul>
+    `
+  })
+  export class ForDemoComponent {
+    items = [
+      { id: 1, name: '项目1' },
+      { id: 2, name: '项目2' },
+      { id: 3, name: '项目3' }
+    ];
+  }
+  
+  // 2. 使用索引
+  @Component({
+    selector: 'app-for-index-demo',
+    template: `
+      <ul>
+        <li *ngFor="let item of items; let i = index">
+          {{ i + 1 }}. {{ item.name }}
+        </li>
+      </ul>
+    `
+  })
+  export class ForIndexDemoComponent {
+    items = [
+      { id: 1, name: '项目1' },
+      { id: 2, name: '项目2' },
+      { id: 3, name: '项目3' }
+    ];
+  }
+  
+  // 3. 使用trackBy提高性能
+  @Component({
+    selector: 'app-for-trackby-demo',
+    template: `
+      <ul>
+        <li *ngFor="let item of items; trackBy: trackById">
+          {{ item.name }}
+        </li>
+      </ul>
+      <button (click)="refreshItems()">刷新列表</button>
+    `
+  })
+  export class ForTrackByDemoComponent {
+    items = [
+      { id: 1, name: '项目1' },
+      { id: 2, name: '项目2' },
+      { id: 3, name: '项目3' }
+    ];
+    
+    trackById(index: number, item: any): number {
+      return item.id; // 使用唯一ID作为跟踪标识
+    }
+    
+    refreshItems() {
+      // 模拟从服务器获取新数据
+      this.items = [
+        { id: 1, name: '项目1 (已更新)' },
+        { id: 2, name: '项目2 (已更新)' },
+        { id: 3, name: '项目3 (已更新)' },
+        { id: 4, name: '项目4 (新增)' }
+      ];
+    }
+  }
+  
+  // 4. 使用其他局部变量
+  @Component({
+    selector: 'app-for-vars-demo',
+    template: `
+      <ul>
+        <li *ngFor="let item of items; 
+                    let i = index; 
+                    let first = first; 
+                    let last = last; 
+                    let even = even; 
+                    let odd = odd"
+            [class.first]="first"
+            [class.last]="last"
+            [class.even]="even"
+            [class.odd]="odd">
+          {{ i + 1 }}. {{ item.name }}
+          <span *ngIf="first">(第一项)</span>
+          <span *ngIf="last">(最后一项)</span>
+        </li>
+      </ul>
+    `
+  })
+  export class ForVarsDemoComponent {
+    items = [
+      { id: 1, name: '项目1' },
+      { id: 2, name: '项目2' },
+      { id: 3, name: '项目3' },
+      { id: 4, name: '项目4' }
+    ];
+  }
+  
+  // 5. 嵌套ngFor
+  @Component({
+    selector: 'app-nested-for-demo',
+    template: `
+      <div *ngFor="let group of dataGroups">
+        <h3>{{ group.name }}</h3>
+        <ul>
+          <li *ngFor="let item of group.items">
+            {{ item.name }}
+          </li>
+        </ul>
+      </div>
+    `
+  })
+  export class NestedForDemoComponent {
+    dataGroups = [
+      {
+        name: '分组1',
+        items: [
+          { id: 1, name: '项目1-1' },
+          { id: 2, name: '项目1-2' }
+        ]
+      },
+      {
+        name: '分组2',
+        items: [
+          { id: 3, name: '项目2-1' },
+          { id: 4, name: '项目2-2' }
+        ]
+      }
+    ];
+  }
+  ```
+
+- ***ngSwitch 指令详解**
+
+  ```typescript
+  // 1. 基本用法
+  @Component({
+    selector: 'app-switch-demo',
+    template: `
+      <div [ngSwitch]="userRole">
+        <div *ngSwitchCase="'admin'">管理员视图</div>
+        <div *ngSwitchCase="'editor'">编辑者视图</div>
+        <div *ngSwitchCase="'viewer'">查看者视图</div>
+        <div *ngSwitchDefault>访客视图</div>
+      </div>
+      
+      <select [(ngModel)]="userRole">
+        <option value="admin">管理员</option>
+        <option value="editor">编辑者</option>
+        <option value="viewer">查看者</option>
+        <option value="guest">访客</option>
+      </select>
+    `
+  })
+  export class SwitchDemoComponent {
+    userRole = 'guest';
+  }
+  
+  // 2. 复杂条件
+  @Component({
+    selector: 'app-complex-switch-demo',
+    template: `
+      <div [ngSwitch]="true">
+        <div *ngSwitchCase="userRole === 'admin' && isActive">
+          活跃管理员视图
+        </div>
+        <div *ngSwitchCase="userRole === 'admin' && !isActive">
+          非活跃管理员视图
+        </div>
+        <div *ngSwitchCase="userRole === 'user' && isActive">
+          活跃用户视图
+        </div>
+        <div *ngSwitchCase="userRole === 'user' && !isActive">
+          非活跃用户视图
+        </div>
+        <div *ngSwitchDefault>
+          未知用户类型
+        </div>
+      </div>
+    `
+  })
+  export class ComplexSwitchDemoComponent {
+    userRole = 'admin';
+    isActive = true;
+  }
+  
+  // 3. 使用模板引用
+  @Component({
+    selector: 'app-template-switch-demo',
+    template: `
+      <div [ngSwitch]="currentView">
+        <ng-container *ngSwitchCase="'list'" 
+                      [ngTemplateOutlet]="listView">
+        </ng-container>
+        <ng-container *ngSwitchCase="'grid'" 
+                      [ngTemplateOutlet]="gridView">
+        </ng-container>
+        <ng-container *ngSwitchDefault 
+                      [ngTemplateOutlet]="defaultView">
+        </ng-container>
+      </div>
+      
+      <ng-template #listView>
+        <div class="list-view">
+          <div *ngFor="let item of items">
+            {{ item.name }} - 列表视图
+          </div>
+        </div>
+      </ng-template>
+      
+      <ng-template #gridView>
+        <div class="grid-view">
+          <div class="grid-item" *ngFor="let item of items">
+            {{ item.name }} - 网格视图
+          </div>
+        </div>
+      </ng-template>
+      
+      <ng-template #defaultView>
+        <div class="default-view">
+          请选择视图类型
+        </div>
+      </ng-template>
+      
+      <div class="view-controls">
+        <button (click)="currentView = 'list'">列表视图</button>
+        <button (click)="currentView = 'grid'">网格视图</button>
+      </div>
+    `
+  })
+  export class TemplateSwitchDemoComponent {
+    currentView = 'list';
+    items = [
+      { id: 1, name: '项目1' },
+      { id: 2, name: '项目2' },
+      { id: 3, name: '项目3' }
+    ];
+  }
+  ```
+
+- **结构型指令性能优化**
+
+  ```typescript
+  // 1. 使用OnPush变更检测策略
+  @Component({
+    selector: 'app-performance-demo',
+    template: `
+      <div>
+        <ul>
+          <li *ngFor="let item of items; trackBy: trackById">
+            {{ item.name }}
+          </li>
+        </ul>
+      </div>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
+  })
+  export class PerformanceDemoComponent {
+    @Input() items: any[] = [];
+    
+    trackById(index: number, item: any): number {
+      return item.id;
+    }
+  }
+  
+  // 2. 避免不必要的DOM操作
+  @Component({
+    selector: 'app-optimization-demo',
+    template: `
+      <!-- 不好的做法: 频繁切换会导致DOM重建 -->
+      <div *ngIf="isVisible" class="content">内容</div>
+      
+      <!-- 更好的做法: 使用[hidden]属性 -->
+      <div [hidden]="!isVisible" class="content">内容</div>
+      
+      <!-- 对于大型内容或需要完全移除的情况，使用ngIf -->
+      <div *ngIf="showLargeContent">
+        <!-- 大量内容或重型组件 -->
+      </div>
+    `
+  })
+  export class OptimizationDemoComponent {
+    isVisible = true;
+    showLargeContent = false;
+  }
+  
+  // 3. 避免深层嵌套的ngFor
+  @Component({
+    selector: 'app-nested-optimization',
+    template: `
+      <!-- 不好的做法: 三层嵌套循环 -->
+      <div *ngFor="let section of data">
+        <div *ngFor="let group of section.groups">
+          <div *ngFor="let item of group.items">
+            {{ item.name }}
+          </div>
+        </div>
+      </div>
+      
+      <!-- 更好的做法: 拆分为组件 -->
+      <app-section *ngFor="let section of data" 
+                  [section]="section">
+      </app-section>
+    `
+  })
+  export class NestedOptimizationComponent {
+    data = [/* 复杂嵌套数据 */];
+  }
+  
+  // 4. 条件渲染大型列表
+  @Component({
+    selector: 'app-conditional-list',
+    template: `
+      <div>
+        <ng-container *ngIf="isDataLoaded">
+          <div *ngFor="let item of items; trackBy: trackById">
+            {{ item.name }}
+          </div>
+        </ng-container>
+      </div>
+    `
+  })
+  export class ConditionalListComponent {
+    items: any[] = [];
+    isDataLoaded = false;
+    
+    trackById(index: number, item: any): number {
+      return item.id;
+    }
+    
+    loadData() {
+      // 加载数据后再设置标志
+      this.dataService.getItems().subscribe(data => {
+        this.items = data;
+        this.isDataLoaded = true;
+      });
+    }
+  }
+  ```
+
+- **自定义结构型指令**
+
+  ```typescript
+  // 1. 创建自定义结构型指令
+  @Directive({
+    selector: '[appRepeat]'
+  })
+  export class RepeatDirective {
+    constructor(
+      private templateRef: TemplateRef<any>,
+      private viewContainer: ViewContainerRef
+    ) {}
+    
+    @Input() set appRepeat(count: number) {
+      // 清除现有视图
+      this.viewContainer.clear();
+      
+      // 根据count创建多个视图
+      for (let i = 0; i < count; i++) {
+        // 创建嵌入视图并传递上下文
+        this.viewContainer.createEmbeddedView(this.templateRef, {
+          $implicit: i,  // 隐式值
+          index: i       // 命名值
+        });
+      }
+    }
+  }
+  
+  // 使用自定义结构型指令
+  @Component({
+    selector: 'app-custom-directive-demo',
+    template: `
+      <div>
+        <div *appRepeat="3; let i = index">
+          这是第 {{ i + 1 }} 个重复项
+        </div>
+      </div>
+    `
+  })
+  export class CustomDirectiveDemoComponent {}
+  
+  // 2. 创建条件结构型指令
+  @Directive({
+    selector: '[appIfNot]'
+  })
+  export class IfNotDirective {
+    private hasView = false;
+    
+    constructor(
+      private templateRef: TemplateRef<any>,
+      private viewContainer: ViewContainerRef
+    ) {}
+    
+    @Input() set appIfNot(condition: boolean) {
+      // 当条件为false时显示内容
+      if (!condition && !this.hasView) {
+        this.viewContainer.createEmbeddedView(this.templateRef);
+        this.hasView = true;
+      } else if (condition && this.hasView) {
+        this.viewContainer.clear();
+        this.hasView = false;
+      }
+    }
+  }
+  
+  // 使用自定义条件指令
+  @Component({
+    selector: 'app-if-not-demo',
+    template: `
+      <div>
+        <p *appIfNot="isLoggedIn">
+          请登录以查看内容
+        </p>
+        
+        <button (click)="toggleLogin()">
+          {{ isLoggedIn ? '登出' : '登录' }}
+        </button>
+      </div>
+    `
+  })
+  export class IfNotDemoComponent {
+    isLoggedIn = false;
+    
+    toggleLogin() {
+      this.isLoggedIn = !this.isLoggedIn;
+    }
+  }
+  ```
+
+- **结构型指令最佳实践**
+
+  ```typescript
+  // 1. 使用ng-container避免额外的DOM元素
+  @Component({
+    selector: 'app-container-demo',
+    template: `
+      <!-- 不好的做法: 额外的div元素 -->
+      <div *ngIf="isVisible">
+        <p>一些内容</p>
+      </div>
+      
+      <!-- 更好的做法: 使用ng-container -->
+      <ng-container *ngIf="isVisible">
+        <p>一些内容</p>
+      </ng-container>
+      
+      <!-- 组合多个结构型指令 -->
+      <ng-container *ngIf="items.length > 0">
+        <div *ngFor="let item of items">
+          {{ item.name }}
+        </div>
+      </ng-container>
+    `
+  })
+  export class ContainerDemoComponent {
+    isVisible = true;
+    items = [
+      { id: 1, name: '项目1' },
+      { id: 2, name: '项目2' }
+    ];
+  }
+  
+  // 2. 使用ng-template和ngTemplateOutlet复用模板
+  @Component({
+    selector: 'app-template-reuse-demo',
+    template: `
+      <ng-template #itemTemplate let-item>
+        <div class="item">
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.description }}</p>
+        </div>
+      </ng-template>
+      
+      <div class="featured-items">
+        <h2>推荐项目</h2>
+        <ng-container *ngFor="let item of featuredItems">
+          <ng-container 
+            [ngTemplateOutlet]="itemTemplate"
+            [ngTemplateOutletContext]="{ $implicit: item }">
+          </ng-container>
+        </ng-container>
+      </div>
+      
+      <div class="regular-items">
+        <h2>普通项目</h2>
+        <ng-container *ngFor="let item of regularItems">
+          <ng-container 
+            [ngTemplateOutlet]="itemTemplate"
+            [ngTemplateOutletContext]="{ $implicit: item }">
+          </ng-container>
+        </ng-container>
+      </div>
+    `
+  })
+  export class TemplateReuseComponent {
+    featuredItems = [
+      { id: 1, name: '特色项目1', description: '这是一个特色项目' },
+      { id: 2, name: '特色项目2', description: '这是另一个特色项目' }
+    ];
+    
+    regularItems = [
+      { id: 3, name: '普通项目1', description: '这是一个普通项目' },
+      { id: 4, name: '普通项目2', description: '这是另一个普通项目' }
+    ];
+  }
+  
+  // 3. 条件渲染的最佳实践
+  @Component({
+    selector: 'app-conditional-best-practices',
+    template: `
+      <!-- 简单条件使用ngIf -->
+      <div *ngIf="isLoggedIn">
+        欢迎回来，{{ username }}
+      </div>
+      
+      <!-- 多条件使用ngSwitch -->
+      <div [ngSwitch]="userRole">
+        <div *ngSwitchCase="'admin'">管理员面板</div>
+        <div *ngSwitchCase="'user'">用户面板</div>
+        <div *ngSwitchDefault>访客面板</div>
+      </div>
+      
+      <!-- 使用ng-container组合条件 -->
+      <ng-container *ngIf="isLoggedIn">
+        <ng-container *ngIf="hasPermission">
+          <button>执行操作</button>
+        </ng-container>
+      </ng-container>
+      
+      <!-- 使用ng-template和变量存储条件结果 -->
+      <ng-container *ngIf="userInfo$ | async as user; else loading">
+        <h2>{{ user.name }}</h2>
+      </ng-container>
+      
+      <ng-template #loading>
+        <div class="spinner">加载中...</div>
+      </ng-template>
+    `
+  })
+  export class ConditionalBestPracticesComponent {
+    isLoggedIn = true;
+    username = '张三';
+    userRole = 'admin';
+    hasPermission = true;
+    userInfo$ = this.userService.getCurrentUser();
+    
+    constructor(private userService: UserService) {}
+  }
+  ```
+
 #### 1.3.2 属性型指令（[ngClass], [ngStyle]）
+
+- **[ngClass] 指令**
+
+  ```typescript
+  // 基本用法
+  @Component({
+    selector: 'app-user-profile',
+    template: `
+      <div class="profile">
+        <h2>{{ name }}</h2>
+        <p>Age: {{ age }}</p>
+        <p>Role: {{ role }}</p>
+      </div>
+    `
+  })
+  export class UserProfileComponent {
+    // 基本输入属性
+    @Input() name: string;
+    
+    // 带默认值的输入属性
+    @Input() age = 25;
+    
+    // 带别名的输入属性（在父组件中使用[userRole]而非[role]）
+    @Input('userRole') role: string = 'Guest';
+  }
+  
+  // 在父组件中使用
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <app-user-profile 
+        [name]="userName"
+        [age]="userAge"
+        [userRole]="userRole">
+      </app-user-profile>
+    `
+  })
+  export class ParentComponent {
+    userName = '张三';
+    userAge = 30;
+    userRole = 'Admin';
+  }
+  ```
+
+- **[ngStyle] 指令**
+
+  ```typescript
+  // 基本用法
+  @Component({
+    selector: 'app-user-profile',
+    template: `
+      <div class="profile">
+        <h2>{{ name }}</h2>
+        <p>Age: {{ age }}</p>
+        <p>Role: {{ role }}</p>
+      </div>
+    `
+  })
+  export class UserProfileComponent {
+    // 基本输入属性
+    @Input() name: string;
+    
+    // 带默认值的输入属性
+    @Input() age = 25;
+    
+    // 带别名的输入属性（在父组件中使用[userRole]而非[role]）
+    @Input('userRole') role: string = 'Guest';
+  }
+  
+  // 在父组件中使用
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <app-user-profile 
+        [name]="userName"
+        [age]="userAge"
+        [userRole]="userRole">
+      </app-user-profile>
+    `
+  })
+  export class ParentComponent {
+    userName = '张三';
+    userAge = 30;
+    userRole = 'Admin';
+  }
+  ```
+
 #### 1.3.3 自定义指令开发
+
+- **自定义指令基础**
+
+  ```typescript
+  // 自定义指令的创建
+  @Directive({
+    selector: '[appHighlight]'
+  })
+  export class HighlightDirective {
+    constructor(private el: ElementRef) {
+      this.el.nativeElement.style.backgroundColor = 'yellow';
+    }
+  }
+  
+  // 在模板中使用自定义指令
+  @Component({
+    selector: 'app-user-profile',
+    template: `
+      <div class="profile">
+        <h2>{{ name }}</h2>
+        <p>Age: {{ age }}</p>
+        <p>Role: {{ role }}</p>
+      </div>
+    `
+  })
+  export class UserProfileComponent {
+    // 基本输入属性
+    @Input() name: string;
+    
+    // 带默认值的输入属性
+    @Input() age = 25;
+    
+    // 带别名的输入属性（在父组件中使用[userRole]而非[role]）
+    @Input('userRole') role: string = 'Guest';
+  }
+  
+  // 在父组件中使用
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <app-user-profile 
+        [name]="userName"
+        [age]="userAge"
+        [userRole]="userRole">
+      </app-user-profile>
+    `
+  })
+  export class ParentComponent {
+    userName = '张三';
+    userAge = 30;
+    userRole = 'Admin';
+  }
+  ```
+
+- **自定义指令的输入和输出**
+
+  ```typescript
+  // 自定义指令的输入和输出
+  @Directive({
+    selector: '[appHighlight]'
+  })
+  export class HighlightDirective {
+    @Input() highlightColor: string;
+    @Output() highlightEvent = new EventEmitter<void>();
+    
+    constructor(private el: ElementRef) {
+      this.el.nativeElement.style.backgroundColor = 'yellow';
+    }
+    
+    @HostListener('mouseenter') onMouseEnter() {
+      this.el.nativeElement.style.backgroundColor = this.highlightColor;
+      this.highlightEvent.emit();
+    }
+  }
+  
+  // 在模板中使用自定义指令
+  @Component({
+    selector: 'app-user-profile',
+    template: `
+      <div class="profile">
+        <h2>{{ name }}</h2>
+        <p>Age: {{ age }}</p>
+        <p>Role: {{ role }}</p>
+      </div>
+    `
+  })
+  export class UserProfileComponent {
+    // 基本输入属性
+    @Input() name: string;
+    
+    // 带默认值的输入属性
+    @Input() age = 25;
+    
+    // 带别名的输入属性（在父组件中使用[userRole]而非[role]）
+    @Input('userRole') role: string = 'Guest';
+  }
+  
+  // 在父组件中使用
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <app-user-profile 
+        [name]="userName"
+        [age]="userAge"
+        [userRole]="userRole">
+      </app-user-profile>
+    `
+  })
+  export class ParentComponent {
+    userName = '张三';
+    userAge = 30;
+    userRole = 'Admin';
+  }
+  ```
+
+- **自定义指令的生命周期钩子**
+
+  ```typescript
+  // 自定义指令的生命周期钩子
+  @Directive({
+    selector: '[appHighlight]'
+  })
+  export class HighlightDirective {
+    constructor(private el: ElementRef) {
+      this.el.nativeElement.style.backgroundColor = 'yellow';
+    }
+    
+    ngOnInit() {
+      console.log('HighlightDirective初始化');
+    }
+    
+    ngOnDestroy() {
+      console.log('HighlightDirective销毁');
+    }
+  }
+  
+  // 在模板中使用自定义指令
+  @Component({
+    selector: 'app-user-profile',
+    template: `
+      <div class="profile">
+        <h2>{{ name }}</h2>
+        <p>Age: {{ age }}</p>
+        <p>Role: {{ role }}</p>
+      </div>
+    `
+  })
+  export class UserProfileComponent {
+    // 基本输入属性
+    @Input() name: string;
+    
+    // 带默认值的输入属性
+    @Input() age = 25;
+    
+    // 带别名的输入属性（在父组件中使用[userRole]而非[role]）
+    @Input('userRole') role: string = 'Guest';
+  }
+  
+  // 在父组件中使用
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <app-user-profile 
+        [name]="userName"
+        [age]="userAge"
+        [userRole]="userRole">
+      </app-user-profile>
+    `
+  })
+  export class ParentComponent {
+    userName = '张三';
+    userAge = 30;
+    userRole = 'Admin';
+  }
+  ```
+
+- **自定义指令的上下文**
+
+  ```typescript
+  // 自定义指令的上下文
+  @Directive({
+    selector: '[appHighlight]'
+  })
+  export class HighlightDirective {
+    constructor(private el: ElementRef) {
+      this.el.nativeElement.style.backgroundColor = 'yellow';
+    }
+  }
+  
+  // 在模板中使用自定义指令
+  @Component({
+    selector: 'app-user-profile',
+    template: `
+      <div class="profile">
+        <h2>{{ name }}</h2>
+        <p>Age: {{ age }}</p>
+        <p>Role: {{ role }}</p>
+      </div>
+    `
+  })
+  export class UserProfileComponent {
+    // 基本输入属性
+    @Input() name: string;
+    
+    // 带默认值的输入属性
+    @Input() age = 25;
+    
+    // 带别名的输入属性（在父组件中使用[userRole]而非[role]）
+    @Input('userRole') role: string = 'Guest';
+  }
+  
+  // 在父组件中使用
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <app-user-profile 
+        [name]="userName"
+        [age]="userAge"
+        [userRole]="userRole">
+      </app-user-profile>
+    `
+  })
+  export class ParentComponent {
+    userName = '张三';
+    userAge = 30;
+    userRole = 'Admin';
+  }
+  ```
+
+- **自定义指令的依赖注入**
+
+  ```typescript
+  // 自定义指令的依赖注入
+  @Directive({
+    selector: '[appHighlight]'
+  })
+  export class HighlightDirective {
+    constructor(private el: ElementRef) {
+      this.el.nativeElement.style.backgroundColor = 'yellow';
+    }
+  }
+  
+  // 在模板中使用自定义指令
+  @Component({
+    selector: 'app-user-profile',
+    template: `
+      <div class="profile">
+        <h2>{{ name }}</h2>
+        <p>Age: {{ age }}</p>
+        <p>Role: {{ role }}</p>
+      </div>
+    `
+  })
+  export class UserProfileComponent {
+    // 基本输入属性
+    @Input() name: string;
+    
+    // 带默认值的输入属性
+    @Input() age = 25;
+    
+    // 带别名的输入属性（在父组件中使用[userRole]而非[role]）
+    @Input('userRole') role: string = 'Guest';
+  }
+  
+  // 在父组件中使用
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <app-user-profile 
+        [name]="userName"
+        [age]="userAge"
+        [userRole]="userRole">
+      </app-user-profile>
+    `
+  })
+  export class ParentComponent {
+    userName = '张三';
+    userAge = 30;
+    userRole = 'Admin';
+  }
+  ```
+
 #### 1.3.4 指令生命周期
+
+- **指令的生命周期钩子**
+
+  ```typescript
+  // 指令的生命周期钩子
+  @Directive({
+    selector: '[appHighlight]'
+  })
+  export class HighlightDirective {
+    constructor(private el: ElementRef) {
+      this.el.nativeElement.style.backgroundColor = 'yellow';
+    }
+    
+    ngOnInit() {
+      console.log('HighlightDirective初始化');
+    }
+    
+    ngOnDestroy() {
+      console.log('HighlightDirective销毁');
+    }
+  }
+  
+  // 在模板中使用自定义指令
+  @Component({
+    selector: 'app-user-profile',
+    template: `
+      <div class="profile">
+        <h2>{{ name }}</h2>
+        <p>Age: {{ age }}</p>
+        <p>Role: {{ role }}</p>
+      </div>
+    `
+  })
+  export class UserProfileComponent {
+    // 基本输入属性
+    @Input() name: string;
+    
+    // 带默认值的输入属性
+    @Input() age = 25;
+    
+    // 带别名的输入属性（在父组件中使用[userRole]而非[role]）
+    @Input('userRole') role: string = 'Guest';
+  }
+  
+  // 在父组件中使用
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <app-user-profile 
+        [name]="userName"
+        [age]="userAge"
+        [userRole]="userRole">
+      </app-user-profile>
+    `
+  })
+  export class ParentComponent {
+    userName = '张三';
+    userAge = 30;
+    userRole = 'Admin';
+  }
+  ```
 
 ### 1.4 服务与依赖注入（Services & DI）
 
 #### 1.4.1 依赖注入原理
+
+::: details 依赖注入的概念
+依赖注入(Dependency Injection，简称DI)是一种设计模式，用于实现控制反转(IoC)。在Angular中，它是一个核心特性，允许类从外部源获取依赖，而不是自己创建它们。
+
+**核心理念：**
+
+- **分离关注点**：组件只需要声明它需要什么，而不需要关心如何获取或创建
+- **提高解耦**：组件与其依赖实现细节隔离
+- **集中管理**：依赖的实例化和生命周期由框架管理
+- **可配置性**：可以在不同环境中灵活替换依赖的具体实现
+
+**Angular DI的特点：**
+
+```typescript
+// 不使用DI的传统方式
+class UserComponent {
+  private userService: UserService;
+  
+  constructor() {
+    // 直接创建依赖，导致强耦合
+    this.userService = new UserService(new HttpClient(), new Logger());
+  }
+}
+
+// 使用Angular DI的方式
+@Component({/*...*/})
+class UserComponent {
+  constructor(private userService: UserService) {
+    // Angular自动注入依赖，无需关心如何创建
+  }
+}
+```
+
+在Angular中，依赖注入系统使应用程序更具可测试性、可维护性和可扩展性。
+:::
+
+::: details 依赖注入的实现方式
+Angular的依赖注入系统通过以下几种方式实现：
+
+**1. 构造函数注入**
+
+最常用的方式，Angular检查构造函数参数并自动注入依赖：
+
+```typescript
+@Component({
+  selector: 'app-user-list',
+  template: '...'
+})
+export class UserListComponent {
+  users: User[] = [];
+  
+  constructor(
+    private userService: UserService, 
+    private logger: LoggerService
+  ) {
+    // 依赖已被注入，可直接使用
+    this.logger.log('UserListComponent已创建');
+  }
+  
+  ngOnInit() {
+    this.userService.getUsers()
+      .subscribe(users => this.users = users);
+  }
+}
+```
+
+**2. @Injectable() 装饰器**
+
+用于标记可以被注入的服务类：
+
+```typescript
+@Injectable({
+  providedIn: 'root' // 指定注入作用域
+})
+export class DataService {
+  // 服务实现...
+}
+```
+
+**3. 工厂函数**
+
+适用于需要在创建服务实例时进行条件判断或额外配置：
+
+```typescript
+const dataServiceFactory = (http: HttpClient, config: AppConfig) => {
+  if (config.useMockData) {
+    return new MockDataService();
+  }
+  return new RealDataService(http);
+};
+
+@NgModule({
+  providers: [
+    {
+      provide: DataService,
+      useFactory: dataServiceFactory,
+      deps: [HttpClient, AppConfig]
+    }
+  ]
+})
+export class AppModule { }
+```
+
+**4. InjectionToken**
+
+处理非类依赖（如配置对象、常量值）：
+
+```typescript
+export const API_URL = new InjectionToken<string>('api.url');
+
+@NgModule({
+  providers: [
+    { provide: API_URL, useValue: 'https://api.example.com/v1' }
+  ]
+})
+export class AppModule { }
+
+// 在组件中使用
+@Component({/*...*/})
+class ApiComponent {
+  constructor(@Inject(API_URL) private apiUrl: string) {
+    console.log(`Using API URL: ${this.apiUrl}`);
+  }
+}
+```
+
+**5. 提供者语法**
+
+Angular提供了多种注册依赖的方式：
+
+```typescript
+@NgModule({
+  providers: [
+    UserService, // 简写形式，等价于{ provide: UserService, useClass: UserService }
+    { provide: UserService, useClass: EnhancedUserService }, // 类提供者
+    { provide: 'API_KEY', useValue: 'abc123' }, // 值提供者
+    { provide: LoggerService, useExisting: ConsoleLoggerService }, // 别名提供者
+  ]
+})
+```
+:::
+
+::: details 依赖注入的分层结构
+Angular的依赖注入系统是分层的，具有清晰的继承关系：
+
+**1. 注入器层级**
+
+```
+Platform Injector (平台级)
+   ↓
+Root Injector (根级)
+   ↓
+Module Injectors (模块级)
+   ↓
+Component Injectors (组件级)
+```
+
+**2. 注入器解析过程**
+
+当组件请求依赖时，Angular会：
+1. 先在组件注入器中查找
+2. 如果没找到，向上查找父组件注入器
+3. 继续向上至模块注入器
+4. 然后是根注入器
+5. 最后是平台注入器
+6. 如果所有层级都未找到，则抛出错误或返回默认值
+
+**示例：解析过程可视化**
+
+```typescript
+@Component({
+  selector: 'parent-component',
+  providers: [
+    { provide: DataService, useClass: ParentDataService }
+  ]
+})
+class ParentComponent {
+  constructor(private dataService: DataService) {
+    // 注入ParentDataService实例
+  }
+}
+
+@Component({
+  selector: 'child-component',
+  providers: [
+    // 为此组件及其子组件重新提供DataService
+    { provide: DataService, useClass: ChildDataService }
+  ]
+})
+class ChildComponent {
+  constructor(private dataService: DataService) {
+    // 注入ChildDataService实例，覆盖了父级提供的实例
+  }
+}
+
+@Component({
+  selector: 'grandchild-component'
+  // 未提供DataService
+})
+class GrandchildComponent {
+  constructor(private dataService: DataService) {
+    // 从最近的祖先(ChildComponent)获取ChildDataService实例
+  }
+}
+```
+
+这种层级结构使得Angular能够精确控制服务的范围和生命周期，非常适合创建复杂的组件树层次结构。
+:::
+
+::: details 依赖注入的优点
+Angular依赖注入机制带来以下核心优势：
+
+**1. 提高代码的可测试性**
+
+```typescript
+// 使用DI的组件可以轻松模拟依赖
+describe('UserComponent', () => {
+  let component: UserComponent;
+  let mockUserService: jasmine.SpyObj<UserService>;
+  
+  beforeEach(() => {
+    mockUserService = jasmine.createSpyObj('UserService', ['getUsers']);
+    mockUserService.getUsers.and.returnValue(of([{id: 1, name: 'Test User'}]));
+    
+    TestBed.configureTestingModule({
+      declarations: [UserComponent],
+      providers: [
+        { provide: UserService, useValue: mockUserService }
+      ]
+    });
+    
+    component = TestBed.createComponent(UserComponent).componentInstance;
+  });
+  
+  it('should load users from service', () => {
+    component.ngOnInit();
+    expect(mockUserService.getUsers).toHaveBeenCalled();
+    expect(component.users.length).toBe(1);
+  });
+});
+```
+
+**2. 减少代码的耦合度**
+- 组件依赖接口而非具体实现
+- 实现变更时无需修改消费者代码
+- 支持按需切换不同实现
+
+**3. 提高代码的可维护性**
+- 职责清晰划分：组件专注于视图逻辑，服务专注于业务逻辑
+- 依赖集中管理：在一处配置，多处使用
+- 代码更易于理解：构造函数清晰展示组件的依赖关系
+
+**4. 提高代码的可扩展性**
+- 容易替换实现：比如从本地存储切换到远程API
+- 支持特性切换：通过不同的provider实现功能开关
+- 跨应用共享服务：多个Angular应用可共享同一个服务实例
+
+**5. 支持懒加载和按需实例化**
+- 服务可以按需实例化，减少初始加载时间
+- 通过providedIn配置，服务可以随模块懒加载
+- 可以根据条件创建不同的服务实例
+
+**实际应用场景：**
+
+```typescript
+// 开发环境使用mock数据，生产环境使用真实API
+@NgModule({
+  providers: [
+    {
+      provide: DataService,
+      useClass: environment.production ? ApiDataService : MockDataService
+    }
+  ]
+})
+export class AppModule { }
+```
+:::
+
 #### 1.4.2 服务的作用域
+
+- **服务的作用域**
+
+  ```typescript
+  // Angular 提供了多种服务作用域
+  // 1. root 作用域 - 全局单例
+  // 2. platform 作用域 - 多个应用共享
+  // 3. any 作用域 - 每个懒加载模块独立实例
+  // 4. 特定模块作用域
+  ```
+
+- **服务实例化策略**
+
+  ```typescript
+  // Angular 提供了多种服务实例化策略
+  // 1. useClass - 类提供者
+  // 2. useValue - 值提供者
+  // 3. useFactory - 工厂提供者
+  // 4. useExisting - 别名提供者
+  ```
+
+- **循环依赖处理**
+
+  ```typescript
+  // Angular 提供了多种处理循环依赖的方法
+  // 1. 使用 forwardRef 解决循环依赖
+  // 2. 使用接口打破循环依赖
+  ```
+
 #### 1.4.3 Provider 配置
+
+- **Provider 配置**
+
+  ```typescript
+  // Angular 提供了多种 Provider 配置方式
+  // 1. useClass - 类提供者
+  // 2. useValue - 值提供者
+  // 3. useFactory - 工厂提供者
+  // 4. useExisting - 别名提供者
+  ```
+
+- **循环依赖处理**
+
+  ```typescript
+  // Angular 提供了多种处理循环依赖的方法
+  // 1. 使用 forwardRef 解决循环依赖
+  // 2. 使用接口打破循环依赖
+  ```
+
 #### 1.4.4 多级注入器
+
+- **多级注入器**
+
+  ```typescript
+  // Angular 提供了多级注入器，用于处理复杂的依赖关系
+  // 1. 平台注入器 - 所有应用共享
+  // 2. 根注入器 - 应用级别
+  // 3. 模块注入器 - 特性模块级别
+  // 4. 组件注入器 - 组件及其子组件
+  ```
+
+- **注入器作用域**
+
+  ```typescript
+  // Angular 提供了多种注入器作用域
+  // 1. root 作用域 - 应用级单例
+  // 2. platform 作用域 - 多个应用共享
+  // 3. any 作用域 - 每个懒加载模块独立实例
+  // 4. 特定模块作用域
+  ```
+
+- **提供者类型**
+
+  ```typescript
+  // Angular 提供了多种提供者类型
+  // 1. useClass - 类提供者
+  // 2. useValue - 值提供者
+  // 3. useFactory - 工厂提供者
+  // 4. useExisting - 别名提供者
+  ```
+
+- **循环依赖处理**
+
+  ```typescript
+  // Angular 提供了多种处理循环依赖的方法
+  // 1. 使用 forwardRef 解决循环依赖
+  // 2. 使用接口打破循环依赖
+  ```
+
 #### 1.4.5 服务单例模式
+
+- **服务单例模式**
+
+  ```typescript
+  // Angular 提供了服务单例模式，用于确保服务在应用中只有一个实例
+  // 1. 使用 @Injectable 装饰器
+  // 2. 使用 providedIn 属性
+  ```
 
 ## 2. 高级特性
 
 ### 2.1 响应式编程（RxJS）
 
 #### 2.1.1 Observable 和 Subject
+
+- **Observable**
+
+  ```typescript
+  // Observable 是 RxJS 中的核心概念之一
+  // 它表示一个可观察的对象，可以发出一系列的值
+  // 主要用于处理异步数据流
+  ```
+
+- **Subject**
+
+  ```typescript
+  // Subject 是 Observable 的一种特殊类型
+  // 它可以同时作为事件源和事件目标
+  // 主要用于在多个观察者之间共享数据
+  ```
+
 #### 2.1.2 常用操作符
+
+- **操作符**
+
+  ```typescript
+  // 操作符是 RxJS 中的一个重要概念
+  // 它们用于对 Observable 进行转换和操作
+  // 常用的操作符包括: map, filter, mergeMap, switchMap, concatMap, take, takeUntil, etc.
+  ```
+
 #### 2.1.3 错误处理
+
+- **错误处理**
+
+  ```typescript
+  // 错误处理是 RxJS 中的一个重要概念
+  // 它们用于处理 Observable 中的错误
+  // 常用的错误处理操作符包括: catchError, retry, etc.
+  ```
+
 #### 2.1.4 取消订阅和内存泄漏
+
+- **取消订阅**
+
+  ```typescript
+  // 取消订阅是 RxJS 中的一个重要概念
+  // 它们用于停止 Observable 的订阅
+  // 常用的取消订阅操作符包括: take, takeUntil, etc.
+  ```
+
+- **内存泄漏**
+
+  ```typescript
+  // 内存泄漏是 RxJS 中的一个重要概念
+  // 它们用于处理 Observable 中的内存泄漏问题
+  // 常用的内存泄漏处理操作符包括: take, takeUntil, etc.
+  ```
+
 #### 2.1.5 高阶操作符（switchMap, mergeMap, concatMap）
+
+- **高阶操作符**
+
+  ```typescript
+  // 高阶操作符是 RxJS 中的一个重要概念
+  // 它们用于对 Observable 进行复杂的转换和操作
+  // 常用的操作符包括: switchMap, mergeMap, concatMap, etc.
+  ```
 
 ### 2.2 表单处理
 
