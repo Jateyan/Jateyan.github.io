@@ -6,3 +6,9 @@ node_modules
 .env.local
 .env.development
 .env.production
+/docs/.vuepress/.cache/*
+!/docs/.vuepress/.cache/.gitkeep
+/docs/.vuepress/.temp/*
+!/docs/.vuepress/.temp/.gitkeep
+docs/.vuepress/.cache/*
+!docs/.vuepress/.cache/.gitkeep

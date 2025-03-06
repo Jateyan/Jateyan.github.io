@@ -6473,18 +6473,437 @@ export class AppModule { }
 
 #### 2.2.1 模板驱动表单
 
-- **基本用法**
+- **基本概念与特点**
 
-  - NgModel 指令使用
-  - 表单验证状态
-  - 提交处理
-  - 双向绑定
-- **表单验证**
+  - 以HTML表单为中心构建
+  - 使用`ngModel`指令实现双向绑定
+  - 表单验证基于HTML5原生验证属性
+  - 由`FormsModule`提供支持
+  - 适合简单场景和快速原型开发
 
-  - 内置验证器
-  - 自定义验证指令
-  - 错误信息显示
-  - 验证状态样式
+- **关键指令与使用方式**
+
+  <details>
+  <summary>核心指令介绍</summary>
+  
+  | 指令 | 选择器 | 作用 |
+  |------|--------|------|
+  | `NgForm` | `form` | 自动应用到`<form>`标签，创建顶级`FormGroup`实例 |
+  | `NgModel` | `[ngModel]` | 创建`FormControl`实例并绑定到表单控件 |
+  | `NgModelGroup` | `[ngModelGroup]` | 创建表单控件组，生成嵌套的`FormGroup` |
+  | `NgSubmit` | `(ngSubmit)` | 当表单提交时触发 |
+  | `RequiredValidator` | `required` | 必填字段验证 |
+  | `PatternValidator` | `pattern` | 正则表达式验证 |
+  | `MinLengthValidator` | `minlength` | 最小长度验证 |
+  | `MaxLengthValidator` | `maxlength` | 最大长度验证 |
+  
+  </details>
+
+- **模板驱动表单实现示例**
+
+  <details>
+  <summary>基本表单示例代码</summary>
+  
+  ```typescript
+  // 导入FormsModule
+  import { NgModule } from '@angular/core';
+  import { BrowserModule } from '@angular/platform-browser';
+  import { FormsModule } from '@angular/forms';
+  import { AppComponent } from './app.component';
+  
+  @NgModule({
+    imports: [BrowserModule, FormsModule],
+    declarations: [AppComponent],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+  ```
+  
+  ```typescript
+  // 组件类
+  import { Component } from '@angular/core';
+  
+  @Component({
+    selector: 'app-user-form',
+    templateUrl: './user-form.component.html'
+  })
+  export class UserFormComponent {
+    user = {
+      name: '',
+      email: '',
+      password: ''
+    };
+  
+    onSubmit() {
+      console.log('表单提交数据:', this.user);
+      // 处理表单提交
+    }
+  }
+  ```
+  
+  ```html
+  <!-- 模板文件 user-form.component.html -->
+  <form #userForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+      <label for="name">姓名</label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name"
+        [(ngModel)]="user.name" 
+        #name="ngModel"
+        required 
+        minlength="2"
+        class="form-control">
+  
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+        <div *ngIf="name.errors?.['required']">姓名是必填项</div>
+        <div *ngIf="name.errors?.['minlength']">姓名至少需要2个字符</div>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="email">邮箱</label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email"
+        [(ngModel)]="user.email" 
+        #email="ngModel"
+        required 
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+        class="form-control">
+  
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+        <div *ngIf="email.errors?.['required']">邮箱是必填项</div>
+        <div *ngIf="email.errors?.['pattern']">请输入有效的邮箱地址</div>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="password">密码</label>
+      <input 
+        type="password" 
+        id="password" 
+        name="password"
+        [(ngModel)]="user.password" 
+        #password="ngModel"
+        required 
+        minlength="6"
+        class="form-control">
+  
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+        <div *ngIf="password.errors?.['required']">密码是必填项</div>
+        <div *ngIf="password.errors?.['minlength']">密码至少需要6个字符</div>
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">提交</button>
+  </form>
+  ```
+  
+  </details>
+
+- **表单验证状态与CSS类**
+
+  <details>
+  <summary>状态类与样式控制</summary>
+  
+  Angular会根据表单控件的状态自动添加以下CSS类：
+  
+  | CSS类 | 触发条件 | 说明 |
+  |-------|---------|------|
+  | `ng-valid` | 控件通过验证 | 可用于显示成功状态 |
+  | `ng-invalid` | 控件未通过验证 | 可用于显示错误状态 |
+  | `ng-pristine` | 控件值未改变 | 初始状态 |
+  | `ng-dirty` | 控件值已改变 | 用户已输入内容 |
+  | `ng-untouched` | 控件未获得过焦点 | 用户未交互 |
+  | `ng-touched` | 控件已获得过焦点 | 用户已交互 |
+  | `ng-pending` | 异步验证正在进行中 | 等待验证结果 |
+  
+  应用示例：
+  
+  ```css
+  /* 验证状态样式 */
+  .ng-valid[required], .ng-valid.required {
+    border-left: 5px solid #42A948; /* 绿色 */
+  }
+  
+  .ng-invalid:not(form) {
+    border-left: 5px solid #a94442; /* 红色 */
+  }
+  
+  .ng-pending {
+    border-left: 5px solid #e3a21a; /* 黄色 */
+  }
+  ```
+  
+  </details>
+
+- **访问表单值和状态**
+
+  <details>
+  <summary>获取表单数据</summary>
+  
+  ```html
+  <!-- 模板中访问表单值和状态 -->
+  <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+    <!-- 表单内容... -->
+    
+    <div class="debug-info" *ngIf="isDebug">
+      <h4>表单状态</h4>
+      <p>表单有效: {{userForm.valid}}</p>
+      <p>表单已修改: {{userForm.dirty}}</p>
+      <p>表单已触摸: {{userForm.touched}}</p>
+      <p>表单值: {{userForm.value | json}}</p>
+    </div>
+  </form>
+  ```
+  
+  ```typescript
+  // 组件中访问表单实例
+  import { Component, ViewChild } from '@angular/core';
+  import { NgForm } from '@angular/forms';
+  
+  @Component({
+    selector: 'app-user-form',
+    templateUrl: './user-form.component.html'
+  })
+  export class UserFormComponent {
+    @ViewChild('userForm') userForm!: NgForm;
+    isDebug = false;
+    
+    resetForm() {
+      this.userForm.resetForm();
+    }
+    
+    setDefault() {
+      // 设置默认值
+      this.userForm.form.patchValue({
+        name: '张三',
+        email: 'zhangsan@example.com'
+      });
+    }
+    
+    onSubmit() {
+      if (this.userForm.valid) {
+        console.log('表单值:', this.userForm.value);
+        // 提交表单处理逻辑
+      }
+    }
+  }
+  ```
+  
+  </details>
+
+- **嵌套表单组**
+
+  <details>
+  <summary>使用ngModelGroup创建嵌套表单</summary>
+  
+  ```html
+  <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+    <!-- 个人信息组 -->
+    <div ngModelGroup="personalInfo" #personalInfo="ngModelGroup">
+      <h3>个人信息 <span *ngIf="personalInfo.invalid" class="text-danger">*</span></h3>
+      
+      <div class="form-group">
+        <label for="name">姓名</label>
+        <input type="text" id="name" name="name" [(ngModel)]="user.personalInfo.name" required class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">邮箱</label>
+        <input type="email" id="email" name="email" [(ngModel)]="user.personalInfo.email" required class="form-control">
+      </div>
+    </div>
+    
+    <!-- 地址信息组 -->
+    <div ngModelGroup="address" #address="ngModelGroup">
+      <h3>地址信息 <span *ngIf="address.invalid" class="text-danger">*</span></h3>
+      
+      <div class="form-group">
+        <label for="street">街道</label>
+        <input type="text" id="street" name="street" [(ngModel)]="user.address.street" required class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="city">城市</label>
+        <input type="text" id="city" name="city" [(ngModel)]="user.address.city" required class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="zip">邮编</label>
+        <input type="text" id="zip" name="zip" [(ngModel)]="user.address.zip" pattern="[0-9]{6}" class="form-control">
+      </div>
+    </div>
+    
+    <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">提交</button>
+  </form>
+  ```
+  
+  ```typescript
+  // 组件中的数据结构
+  export class UserFormComponent {
+    user = {
+      personalInfo: {
+        name: '',
+        email: ''
+      },
+      address: {
+        street: '',
+        city: '',
+        zip: ''
+      }
+    };
+    
+    onSubmit() {
+      console.log('提交数据:', this.user);
+      // 处理表单提交
+    }
+  }
+  ```
+  
+  </details>
+
+- **自定义验证器**
+
+  <details>
+  <summary>创建自定义表单验证器</summary>
+  
+  ```typescript
+  // 自定义验证器指令
+  import { Directive, Input } from '@angular/core';
+  import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn } from '@angular/forms';
+  
+  // 验证器函数
+  export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const forbidden = nameRe.test(control.value);
+      return forbidden ? {'forbiddenName': {value: control.value}} : null;
+    };
+  }
+  
+  // 验证器指令
+  @Directive({
+    selector: '[appForbiddenName]',
+    providers: [{
+      provide: NG_VALIDATORS, 
+      useExisting: ForbiddenNameValidatorDirective, 
+      multi: true
+    }]
+  })
+  export class ForbiddenNameValidatorDirective implements Validator {
+    @Input('appForbiddenName') forbiddenName = '';
+  
+    validate(control: AbstractControl): {[key: string]: any} | null {
+      return this.forbiddenName ? 
+        forbiddenNameValidator(new RegExp(this.forbiddenName, 'i'))(control) : null;
+    }
+  }
+  ```
+  
+  ```html
+  <!-- 在模板中使用自定义验证器 -->
+  <div class="form-group">
+    <label for="username">用户名</label>
+    <input 
+      type="text" 
+      id="username" 
+      name="username"
+      [(ngModel)]="user.username" 
+      #username="ngModel"
+      required
+      appForbiddenName="admin"
+      class="form-control">
+  
+    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
+      <div *ngIf="username.errors?.['required']">用户名是必填项</div>
+      <div *ngIf="username.errors?.['forbiddenName']">不能使用 "{{username.errors?.['forbiddenName'].value}}" 作为用户名</div>
+    </div>
+  </div>
+  ```
+  
+  </details>
+
+- **最佳实践与优缺点对比**
+
+  <details>
+  <summary>模板驱动表单的优缺点</summary>
+  
+  **优点：**
+  
+  1. **上手简单**：语法直观，类似于传统的HTML表单
+  2. **快速开发**：适合简单表单和原型开发
+  3. **自动双向绑定**：通过[(ngModel)]轻松实现
+  4. **HTML验证集成**：直接使用HTML5验证属性
+  5. **降低学习曲线**：对Angular初学者友好
+  
+  **缺点：**
+  
+  1. **可测试性较弱**：由于表单逻辑位于模板中，单元测试难度较大
+  2. **复杂表单处理能力有限**：对于动态表单或复杂验证逻辑不够灵活
+  3. **表单状态难以精确控制**：对表单的细粒度控制不如响应式表单
+  4. **异步验证支持有限**：实现复杂的异步验证较困难
+  5. **可扩展性较差**：随着表单复杂度增加，代码可维护性下降
+  
+  **适用场景：**
+  
+  - 简单的表单需求（如登录、注册表单）
+  - 静态表单结构（不需要动态添加/删除表单控件）
+  - 快速原型设计阶段
+  - 团队对Angular不太熟悉时
+  
+  </details>
+
+- **与响应式表单的比较**
+
+  <details>
+  <summary>模板驱动表单 vs 响应式表单</summary>
+  
+  | 特性 | 模板驱动表单 | 响应式表单 |
+  |------|------------|-----------|
+  | **表单模型创建** | 隐式创建，由Angular根据指令自动创建 | 显式创建，在组件类中使用FormBuilder |
+  | **数据模型** | 非结构化的，松散的 | 结构化的，可预测的 |
+  | **可预测性** | 异步，模板渲染后创建表单模型 | 同步，表单模型直接在组件中定义 |
+  | **表单验证** | 基于指令的验证 | 基于函数的验证 |
+  | **可测试性** | 难以单元测试 | 易于单元测试 |
+  | **复杂表单** | 不适合复杂表单 | 适合复杂、动态表单 |
+  | **代码分布** | 表单逻辑主要在模板中 | 表单逻辑主要在组件类中 |
+  | **变更追踪** | `[(ngModel)]`表达式 | `valueChanges`和`statusChanges`可观察对象 |
+  | **使用场景** | 简单场景、静态表单 | 复杂场景、动态表单 |
+  | **关键模块** | `FormsModule` | `ReactiveFormsModule` |
+  
+  **代码对比：**
+  
+  模板驱动表单：
+  ```html
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+    <input name="username" [(ngModel)]="login.username" required>
+    <input name="password" [(ngModel)]="login.password" required>
+    <button type="submit" [disabled]="loginForm.invalid">登录</button>
+  </form>
+  ```
+  
+  响应式表单：
+  ```typescript
+  // 组件类
+  this.loginForm = this.fb.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required]
+  });
+  ```
+  
+  ```html
+  <!-- 模板 -->
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <input formControlName="username">
+    <input formControlName="password">
+    <button type="submit" [disabled]="loginForm.invalid">登录</button>
+  </form>
+  ```
+  
+  </details>
 
 #### 2.2.2 响应式表单
 
