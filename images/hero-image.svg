@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="600px" viewBox="0 0 800 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>前端技术图</title>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="gradient">
+            <stop stop-color="#41B883" offset="0%"></stop>
+            <stop stop-color="#3498db" offset="50%"></stop>
+            <stop stop-color="#61DAFB" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <!-- Vue Logo -->
+        <g transform="translate(100, 200)">
+            <path d="M204.8,0 L170.7,0 L153.6,29.6 L136.5,0 L102.4,0 L153.6,89 L204.8,0 Z" fill="#41B883"></path>
+            <path d="M153.6,89 L102.4,0 L64,0 L153.6,153 L243.2,0 L204.8,0 L153.6,89 Z" fill="#35495E"></path>
+        </g>
+        
+        <!-- React Logo -->
+        <g transform="translate(400, 200)">
+            <ellipse stroke="#61DAFB" stroke-width="6" cx="120" cy="120" rx="120" ry="45"></ellipse>
+            <ellipse stroke="#61DAFB" stroke-width="6" cx="120" cy="120" rx="120" ry="45" transform="rotate(60, 120, 120)"></ellipse>
+            <ellipse stroke="#61DAFB" stroke-width="6" cx="120" cy="120" rx="120" ry="45" transform="rotate(120, 120, 120)"></ellipse>
+            <circle fill="#61DAFB" cx="120" cy="120" r="25"></circle>
+        </g>
+        
+        <!-- Angular Logo -->
+        <g transform="translate(250, 400)">
+            <path d="M125,30 L125,30 L31.9,63.2 L46.1,186.3 L125,230 L125,230 L125,230 L203.9,186.3 L218.1,63.2 L125,30" fill="#DD0031"></path>
+            <path d="M125,30 L125,52.2 L125,52.1 L125,153.4 L125,153.4 L125,230 L125,230 L203.9,186.3 L218.1,63.2 L125,30" fill="#C3002F"></path>
+            <path d="M125,52.1 L66.8,182.6 L88.5,182.6 L99.7,153.4 L150.3,153.4 L161.3,182.6 L183.1,182.6 L125,52.1 L125,52.1 Z M142,135.4 L108,135.4 L125,94.5 L142,135.4 Z" fill="#FFFFFF"></path>
+        </g>
+        
+        <!-- Code Elements -->
+        <g transform="translate(500, 100)" fill="#3498db">
+            <rect x="0" y="0" width="20" height="20"></rect>
+            <rect x="30" y="0" width="40" height="20"></rect>
+            <rect x="80" y="0" width="100" height="20"></rect>
+            <rect x="0" y="30" width="60" height="20"></rect>
+            <rect x="70" y="30" width="30" height="20"></rect>
+            <rect x="110" y="30" width="70" height="20"></rect>
+            <rect x="0" y="60" width="180" height="20"></rect>
+            <rect x="0" y="90" width="40" height="20"></rect>
+            <rect x="50" y="90" width="130" height="20"></rect>
+        </g>
+        
+        <!-- Circular Connection Lines -->
+        <path d="M200,300 Q400,100 600,300" stroke="url(#gradient)" stroke-width="4" fill="none"></path>
+        <path d="M150,350 Q400,500 650,350" stroke="url(#gradient)" stroke-width="4" fill="none"></path>
+    </g>
+</svg> 
