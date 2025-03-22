@@ -24,6 +24,10 @@
   --vp-c-text-2: rgba(60, 60, 67, 0.78);
   --vp-c-text-3: rgba(60, 60, 67, 0.56);
   */
+
+  /* 添加中文字体支持 */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei";
+  font-family: var(--font-family);
 }
 
 /** 深色模式 */
@@ -47,4 +51,14 @@
   --vp-c-text-2: rgba(235, 235, 245, 0.6);
   --vp-c-text-3: rgba(235, 235, 245, 0.38);
   */
+}
+
+/* 确保所有内容使用正确的字体 */
+body {
+  font-family: var(--font-family);
+}
+
+/* 确保所有标题和段落正确显示中文 */
+h1, h2, h3, h4, h5, h6, p, li, a, span, div {
+  font-family: var(--font-family);
 }

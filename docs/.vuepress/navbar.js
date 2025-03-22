@@ -6,125 +6,84 @@ export const navbar = defineNavbarConfig([
     link: "/",
   },
   {
-    text: "课程",
-    items: [
-      {
-        text: "angular开发实战",
-        link: "/custom/course/angular-note/angular开发实战",
-      },
-    ],
+    text: "指南",
+    link: "/guide/",
   },
   {
-    text: "前端",
+    text: "前端技术",
     items: [
       {
-        text: "html",
-        link: "/custom/front/html/",
-      },
-      {
-        text: "js",
-        link: "/custom/front/js/",
-      },
-      {
-        text: "css",
-        link: "/custom/front/css/",
-      },
-      {
-        text: "网络",
-        link: "/custom/front/network/",
-      },
-      {
-        text: "angular",
-        items:[
-          {
-            text: "angular文章大纲",
-            link: "/custom/front/angular/index.md",
-          },
+        text: "基础",
+        items: [
+          { text: "HTML", link: "/frontend/basics/html/" },
+          { text: "CSS", link: "/frontend/basics/css/" },
+          { text: "JavaScript", link: "/frontend/basics/javascript/" },
+          { text: "TypeScript", link: "/frontend/basics/typescript/" },
         ]
       },
       {
-        text: "vue",
-        items:[
-          {
-            text: "vue文章大纲",
-            link: "/custom/front/vue/index.md",
-          },
-          {
-            text: "架构",
-            link: "/custom/front/vue/架构.md",
-          },
-          {
-            text: "响应式系统",
-            link: "/custom/front/vue/响应式系统.md",
-          },
-            {
-              text: "Composition API",
-              link: "/custom/front/vue/Composition-API.md",
-            },
-            {
-              text: "性能优化",
-              link: "/custom/front/vue/性能优化.md",
-            },
-            {
-              text: "内置组件",
-              link: "/custom/front/vue/内置组件.md",
-            },
-            {
-              text: "新增API",
-              link: "/custom/front/vue/新增API.md",
-            },
-            {
-              text: "模板与指令",
-              link: "/custom/front/vue/模板与指令.md",
-            },
-            {
-              text: "TypeScript",
-              link: "/custom/front/vue/TypeScript.md",
-            },
+        text: "框架",
+        items: [
+          { text: "Vue全家桶", link: "/frontend/frameworks/vue/" },
+          { text: "React生态", link: "/frontend/frameworks/react/" },
+          { text: "Angular实战", link: "/frontend/frameworks/angular/" },
         ]
       },
       {
-        text: "react",
-        items:[
-          {
-            text: "react文章大纲",
-            link: "/custom/front/react/index.md",
-          },
+        text: "构建工具",
+        items: [
+          { text: "Webpack", link: "/frontend/build-tools/webpack/" },
+          { text: "Vite", link: "/frontend/build-tools/vite/" },
+          { text: "Rollup", link: "/frontend/build-tools/rollup/" },
         ]
       },
     ],
   },
   {
-    text: "面试",
+    text: "工程化",
     items: [
-      {
-        text: "网络",
-        link: "/custom/interview/network/",
-      },
-      {
-        text: "angular",
-        link: "/custom/interview/angular/index.md",
-      },
+      { text: "项目架构", link: "/engineering/architecture/" },
+      { text: "性能优化", link: "/engineering/performance/" },
+      { text: "CI/CD", link: "/engineering/ci-cd/" },
+      { text: "测试", link: "/engineering/testing/" },
+      { text: "代码规范", link: "/engineering/code-standards/" },
     ],
   },
-  // {
-  //   text: "AI",
-  //   items:[]
-  // },
-  // {
-  //   text: "其它",
-  //   items:[]
-  // },
-  // {
-  //   text: "工具",
-  //   items:[]
-  // },
-  // {
-  //   text: 'Python教程',
-  //   items:[]
-  // }
   {
-    text: 'PDF文档',
-    link: '/pdfs/',
+    text: "后端技术",
+    items: [
+      { text: "Node.js", link: "/backend/nodejs/" },
+      { text: "数据库", link: "/backend/database/" },
+      { text: "服务端架构", link: "/backend/architecture/" },
+      { text: "API设计", link: "/backend/api-design/" },
+    ],
+  },
+  {
+    text: "DevOps",
+    items: [
+      { text: "Docker", link: "/devops/docker/" },
+      { text: "Kubernetes", link: "/devops/kubernetes/" },
+      { text: "云服务", link: "/devops/cloud-services/" },
+      { text: "监控与日志", link: "/devops/monitoring/" },
+    ],
+  },
+  {
+    text: "高级主题",
+    items: [
+      { text: "设计模式", link: "/advanced/design-patterns/" },
+      { text: "算法与数据结构", link: "/advanced/algorithms/" },
+      { text: "浏览器原理", link: "/advanced/browser/" },
+      { text: "网络协议", link: "/advanced/network/" },
+      { text: "安全", link: "/advanced/security/" },
+    ],
+  },
+  {
+    text: "资源",
+    items: [
+      { text: "PDF文档", link: "/resources/pdfs/" },
+      { text: "面试题库", link: "/resources/interview/" },
+      { text: "工具推荐", link: "/resources/tools/" },
+      { text: "学习路线", link: "/resources/learning-path/" },
+    ],
   },
 ])
