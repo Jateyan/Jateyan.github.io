@@ -2,9 +2,13 @@
 title: Angular架构概述
 description: 详解Angular框架的核心架构设计、模块化结构与依赖注入系统
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, 架构, 模块化, 组件树, 依赖注入, 变化检测
+createTime: 2025/03/22 23:50:20
+permalink: /article/u16qo93z/
 ---
 
 # Angular架构概述

@@ -2,9 +2,13 @@
 title: Angular CLI工具
 description: Angular命令行工具使用详解、项目脚手架生成、自定义配置与开发流程优化
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, CLI, 命令行工具, 项目生成, 构建优化, 开发工作流
+createTime: 2025/03/22 23:52:03
+permalink: /article/5fu67zld/
 ---
 
 # Angular CLI工具

@@ -1,5 +1,5 @@
 import comp from "E:/Jateyan.github.io/docs/.vuepress/.temp/pages/article/envm43wh/index.html.vue"
-const data = JSON.parse("{\"path\":\"/article/envm43wh/\",\"title\":\"angular开发实战\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"angular开发实战\",\"createTime\":\"2025/03/02 10:42:48\",\"permalink\":\"/article/envm43wh/\",\"gitInclude\":[]},\"headers\":[],\"readingTime\":{\"minutes\":54.55,\"words\":16365},\"filePathRelative\":\"custom/course/angular-note/angular开发实战.md\",\"categoryList\":[{\"id\":\"8b9035\",\"sort\":10007,\"name\":\"custom\"},{\"id\":\"ad5eaa\",\"sort\":10027,\"name\":\"course\"},{\"id\":\"2825ed\",\"sort\":10028,\"name\":\"angular-note\"}],\"bulletin\":true}")
+const data = JSON.parse("{\"path\":\"/article/envm43wh/\",\"title\":\"angular开发实战\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"angular开发实战\",\"createTime\":\"2025/03/02 10:42:48\",\"permalink\":\"/article/envm43wh/\",\"gitInclude\":[]},\"headers\":[],\"readingTime\":{\"minutes\":54.55,\"words\":16365},\"filePathRelative\":\"custom/course/angular-note/angular开发实战.md\",\"categoryList\":[{\"id\":\"8b9035\",\"sort\":10006,\"name\":\"custom\"},{\"id\":\"ad5eaa\",\"sort\":10028,\"name\":\"course\"},{\"id\":\"2825ed\",\"sort\":10029,\"name\":\"angular-note\"}],\"bulletin\":true}")
 export { comp, data }
 
 if (import.meta.webpackHot) {
