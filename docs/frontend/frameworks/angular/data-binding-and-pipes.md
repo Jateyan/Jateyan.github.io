@@ -2,9 +2,13 @@
 title: Angular数据绑定与管道
 description: Angular数据绑定机制与管道的完整指南与最佳实践
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, 数据绑定, 属性绑定, 事件绑定, 双向绑定, 管道, 异步管道
+createTime: 2025/03/23 20:10:34
+permalink: /article/a7jx91z2/
 ---
 
 # Angular数据绑定与管道

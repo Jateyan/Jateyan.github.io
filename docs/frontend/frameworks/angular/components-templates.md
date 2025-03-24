@@ -1,3 +1,8 @@
+---
+title: components-templates
+createTime: 2025/03/23 20:00:44
+permalink: /article/4rfah1hi/
+---
 # 组件与模板
 
 Angular的组件与模板系统是构建用户界面的核心，提供了声明式UI开发方式和强大的数据绑定能力。本文档详细介绍组件的生命周期、通信方式以及模板渲染机制。

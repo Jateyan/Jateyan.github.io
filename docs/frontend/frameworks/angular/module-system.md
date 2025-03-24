@@ -1,3 +1,8 @@
+---
+title: module-system
+createTime: 2025/03/23 19:34:01
+permalink: /article/qwkf2h7v/
+---
 # 模块系统(NgModules)
 
 Angular的模块系统是框架的核心组织机制，用于组织应用代码并提供编译上下文。本文档详细介绍NgModules的核心概念与应用实践。
