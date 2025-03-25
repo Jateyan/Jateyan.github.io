@@ -2,9 +2,13 @@
 title: Angular Signal信号系统
 description: Angular信号系统详解：创建、更新、计算信号及与组件的集成最佳实践
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, Signal, 信号系统, 响应式编程, 状态管理, 计算信号
+createTime: 2025/03/24 13:03:37
+permalink: /article/43looq9p/
 ---
 
 # Angular Signal信号系统

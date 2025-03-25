@@ -2,9 +2,13 @@
 title: Angular RxJS数据流管理
 description: 企业级Angular应用中RxJS数据流设计、操作符组合与响应式编程最佳实践
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, RxJS, 数据流, 操作符, Observable, 响应式编程, 状态管理, 订阅
+createTime: 2025/03/24 12:22:00
+permalink: /article/lzqixqpe/
 ---
 
 # Angular RxJS数据流管理

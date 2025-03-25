@@ -2,9 +2,13 @@
 title: Angular指令系统
 description: Angular结构型指令、属性型指令与自定义指令开发详解
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, 指令, 结构型指令, 属性型指令, 自定义指令, ngIf, ngFor, ngSwitch
+createTime: 2025/03/23 19:23:06
+permalink: /article/hcadnsjb/
 ---
 
 # Angular指令系统

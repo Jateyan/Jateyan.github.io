@@ -2,9 +2,13 @@
 title: Angular NgRx状态管理
 description: NgRx企业级状态管理实践：Store设计、Actions、Reducers、Effects、Selectors及性能优化
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, NgRx, Redux, 状态管理, Store, Actions, Reducers, Effects, Selectors, Entity
+createTime: 2025/03/24 13:17:39
+permalink: /article/2fhpnmq7/
 ---
 
 # Angular NgRx状态管理
