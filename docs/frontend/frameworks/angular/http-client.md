@@ -2,9 +2,13 @@
 title: Angular HTTP客户端
 description: Angular应用中的HTTP客户端使用指南，包括基础配置、拦截器、认证、缓存和错误处理
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, HttpClient, HTTP拦截器, 认证授权, 缓存策略, 错误处理
+createTime: 2025/03/28 12:19:54
+permalink: /article/wcchzzjd/
 ---
 # Angular HTTP客户端
 

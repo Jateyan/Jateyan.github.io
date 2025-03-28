@@ -2,9 +2,13 @@
 title: Angular应用结构最佳实践
 description: Angular企业级应用的结构设计指南，包括模块划分原则、代码组织、文件命名约定和核心设施搭建
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, 应用结构, 模块划分, 代码组织, 命名规范, 核心设施
+createTime: 2025/03/28 12:19:54
+permalink: /article/x3wkc73s/
 ---
 # Angular应用结构最佳实践
 

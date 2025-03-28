@@ -1,3 +1,8 @@
+---
+title: feature-design-principles-fixed
+createTime: 2025/03/28 12:19:54
+permalink: /article/g5pnd3ra/
+---
 # Angular特性设计原则
 
 Angular应用开发中，遵循一套完善的设计原则可以显著提升代码质量、可维护性和可扩展性。本文详细介绍Angular开发中的核心设计原则及其在实际项目中的应用。

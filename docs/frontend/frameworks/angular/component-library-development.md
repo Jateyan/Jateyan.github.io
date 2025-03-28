@@ -2,9 +2,13 @@
 title: Angular组件库开发
 description: 设计系统集成、API设计、版本控制、文档生成、示例开发、多主题支持与测试
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, 组件库, 设计系统, 主题定制, API设计, 版本控制, 组件测试
+createTime: 2025/03/28 12:52:12
+permalink: /article/ql9juwll/
 ---
 
 # Angular组件库开发

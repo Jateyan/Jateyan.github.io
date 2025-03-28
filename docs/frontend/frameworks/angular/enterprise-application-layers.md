@@ -1,3 +1,8 @@
+---
+title: enterprise-application-layers
+createTime: 2025/03/28 12:19:54
+permalink: /article/hjgbiujv/
+---
 # 企业级应用层次
 
 企业级Angular应用通常采用分层架构，将应用划分为不同的职责层次，实现关注点分离、提高代码可维护性和扩展性。本文详细介绍这些层次及其实现方式。

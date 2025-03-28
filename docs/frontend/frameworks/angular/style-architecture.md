@@ -1,3 +1,8 @@
+---
+title: style-architecture
+createTime: 2025/03/28 12:36:53
+permalink: /article/cde4np8c/
+---
 ## 响应式设计
 
 Angular应用的响应式设计策略确保应用能在各种设备和屏幕尺寸上提供一致且优化的用户体验。良好的响应式设计是企业级应用的基本要求，可以提高用户满意度并扩大应用的可用性。

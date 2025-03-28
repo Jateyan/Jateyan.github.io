@@ -2,9 +2,13 @@
 title: Angular GraphQL集成
 description: Angular应用中的GraphQL集成指南，包括Apollo Client配置、查询与变更、状态管理集成和订阅实现
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, GraphQL, Apollo Client, 查询与变更, 状态管理, 订阅
+createTime: 2025/03/28 12:19:54
+permalink: /article/6gvgei84/
 ---
 # Angular GraphQL集成
 

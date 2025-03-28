@@ -2,9 +2,13 @@
 title: Angular路由系统
 description: Angular应用中的路由系统指南，包括路由配置、参数传递、子路由设计、路由守卫和预加载策略
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, 路由, 导航, 路由守卫, 预加载, 参数传递
+createTime: 2025/03/28 12:19:54
+permalink: /article/8edviu83/
 ---
 # Angular路由系统
 

@@ -1,3 +1,8 @@
+---
+title: smart-presentational-components
+createTime: 2025/03/28 12:19:54
+permalink: /article/9b9wy6w6/
+---
 # Angular智能组件与呈现组件
 
 智能组件(Smart Components)与呈现组件(Presentational Components)是Angular应用架构中的一种设计模式，通过明确分离组件职责，提高代码的可维护性、可重用性和可测试性。本文详细介绍这种模式的核心概念、实现方法和最佳实践。

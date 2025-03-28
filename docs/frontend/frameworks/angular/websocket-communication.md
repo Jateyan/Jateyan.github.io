@@ -2,9 +2,13 @@
 title: Angular WebSocket通信
 description: Angular应用中的WebSocket通信指南，包括Socket连接管理、实时数据处理、SignalR客户端集成和消息总线设计
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, WebSocket, Socket.IO, SignalR, 实时通信, 消息总线
+createTime: 2025/03/28 12:19:54
+permalink: /article/ougpfa0c/
 ---
 # Angular WebSocket通信
 

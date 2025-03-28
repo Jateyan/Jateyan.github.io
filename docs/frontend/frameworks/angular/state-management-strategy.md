@@ -2,9 +2,13 @@
 title: Angular状态管理策略
 description: Angular应用中的状态管理最佳实践与策略指南
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, 状态管理, 状态设计, 状态归一化, 领域模型
+createTime: 2025/03/28 12:19:54
+permalink: /article/dbd1m204/
 ---
 
 # Angular状态管理策略

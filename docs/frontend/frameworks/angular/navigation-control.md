@@ -2,9 +2,13 @@
 title: Angular导航控制
 description: Angular应用中的导航控制指南，包括命令式导航、声明式导航、路由事件、数据解析器和路由复用策略
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, 导航, 路由, 命令式导航, 声明式导航, 路由复用
+createTime: 2025/03/28 12:19:54
+permalink: /article/d7h34amv/
 ---
 # Angular导航控制
 
