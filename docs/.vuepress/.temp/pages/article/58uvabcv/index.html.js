@@ -1,5 +1,5 @@
 import comp from "E:/Jateyan.github.io/docs/.vuepress/.temp/pages/article/58uvabcv/index.html.vue"
-const data = JSON.parse("{\"path\":\"/article/58uvabcv/\",\"title\":\"事件循环机制\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"事件循环机制\",\"createTime\":\"2025/03/02 10:42:48\",\"permalink\":\"/article/58uvabcv/\",\"gitInclude\":[]},\"headers\":[],\"readingTime\":{\"minutes\":5.05,\"words\":1516},\"filePathRelative\":\"custom/front/js/事件循环机制.md\",\"categoryList\":[{\"id\":\"8b9035\",\"sort\":10003,\"name\":\"custom\"},{\"id\":\"aee7b8\",\"sort\":10011,\"name\":\"front\"},{\"id\":\"3177b0\",\"sort\":10012,\"name\":\"js\"}],\"bulletin\":true}")
+const data = JSON.parse("{\"path\":\"/article/58uvabcv/\",\"title\":\"事件循环机制\",\"lang\":\"zh-CN\",\"frontmatter\":{\"title\":\"事件循环机制\",\"createTime\":\"2025/03/02 10:42:48\",\"permalink\":\"/article/58uvabcv/\",\"gitInclude\":[]},\"headers\":[],\"readingTime\":{\"minutes\":5.05,\"words\":1516},\"filePathRelative\":\"custom/front/js/事件循环机制.md\",\"categoryList\":[{\"id\":\"8b9035\",\"sort\":10003,\"name\":\"custom\"},{\"id\":\"aee7b8\",\"sort\":10011,\"name\":\"front\"},{\"id\":\"3177b0\",\"sort\":10015,\"name\":\"js\"}],\"bulletin\":true}")
 export { comp, data }
 
 if (import.meta.webpackHot) {
