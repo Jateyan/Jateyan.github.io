@@ -52,7 +52,7 @@ export const navbar = defineNavbarConfig([
   {
     text: "后端技术",
     items: [
-      { text: "Node.js", link: "/backend/nodejs/" },
+      { text: "Node.js", link: "/backend/nodejs/index" },
       { text: "数据库", link: "/backend/database/" },
       { text: "服务端架构", link: "/backend/architecture/" },
       { text: "API设计", link: "/backend/api-design/" },
@@ -84,6 +84,14 @@ export const navbar = defineNavbarConfig([
       { text: "面试题库", link: "/resources/interview/" },
       { text: "工具推荐", link: "/resources/tools/" },
       { text: "学习路线", link: "/resources/learning-path/" },
+    ],
+  },
+  {
+    text: "前端面试",
+    items: [
+      { text: "路线", link: "/front-interview/index" },
+      { text: "qiankun", link: "/front-interview/qiankun" },
+      { text: "前端场景", link: "/front-interview/scene" },
     ],
   },
 ])

@@ -2,9 +2,13 @@
 title: Angular高级表单
 description: Angular动态表单生成、复杂验证逻辑、表单状态管理、多步骤表单与性能优化
 head:
-  - - meta
-    - name: keywords
+  -
+    - meta
+    -
+      name: keywords
       content: Angular, 高级表单, 动态表单, 表单验证, 表单状态管理, 多步骤表单, 表单性能
+createTime: 2025/03/30 20:36:17
+permalink: /article/kt035mmk/
 ---
 
 # Angular高级表单
