@@ -1,7 +1,7 @@
 ---
 title: 微前端
 createTime: 2025/04/22 12:18:58
-permalink: /article/el8kx6vq/
+permalink: /article/726j5f7y/
 ---
 
 # 微前端与qiankun面试题

@@ -8,7 +8,7 @@ permalink: /article/h0sxin4z/
 ## 基础概念
 
 ### 1. 什么是Web Components？它解决了哪些问题？
-Web Components是一套不同的技术，允许创建可重用的自定义元素，它们的功能封装在代码的其余部分之外，并可在Web应用中使用。Web Components主要解决以下问题：
+Web Components是HTML5提供的一种原生组件封装集成的方式，我们可以通过这种技术封装一些类似Vue自定义组件的元素，在html中直接使用。Web Components主要解决以下问题：
 - 组件封装与复用
 - 减少框架依赖
 - 标准化组件定义
