@@ -91,6 +91,7 @@ export const navbar = defineNavbarConfig([
     items: [
       { text: "路线", link: "/front-interview/index" },
       { text: "qiankun", link: "/front-interview/qiankun" },
+      { text: "前端场景", link: "/front-interview/scene" },
       { text: "js", link: "/front-interview/js" },
       { text: "css", link: "/front-interview/css" },
       { text: "html", link: "/front-interview/html" },
@@ -98,7 +99,7 @@ export const navbar = defineNavbarConfig([
       { text: "react", link: "/front-interview/react" },
       { text: "webpack", link: "/front-interview/webpack" },
       { text: "vite", link: "/front-interview/vite" },
-      { text: "前端场景", link: "/front-interview/scene" },
+      
     ],
   },
 ])
