@@ -1,6 +1,7 @@
 ---
 title: 高频场景面试专题
 createTime: 2025/04/29 09:54:54
+permalink: /article/fap6dzsj/
 ---
 
 ## 1、如何在浏览器中执行100万个任务，并保证页面不卡顿？
