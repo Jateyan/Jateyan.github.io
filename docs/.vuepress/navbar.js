@@ -93,6 +93,7 @@ export const navbar = defineNavbarConfig([
       { text: "qiankun", link: "/front-interview/qiankun" },
       { text: "前端场景", link: "/front-interview/scene" },
       { text: "js", link: "/front-interview/js" },
+      { text: "ts", link: "/front-interview/ts" },
       { text: "css", link: "/front-interview/css" },
       { text: "html", link: "/front-interview/html" },
       { text: "vue", link: "/front-interview/vue" },

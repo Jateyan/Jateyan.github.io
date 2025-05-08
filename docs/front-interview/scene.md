@@ -15,14 +15,17 @@ permalink: /article/bm7iumo3/
 - requestldleCallback:浏览器空闲时才执行任务，适合低优先级、可延迟的任务，只有浏览器空闲时才执行。
 
 优化方案:
-- 大表单渲染优化:基于React调度器思想的时间分片机制，实现高性能表单渲染。通过动态帧率自适应算法精确计算执行预算，结合requestAnimationFrame同步浏览器渲染周期，将复杂渲染任务拆分为微批次执行。巧妙运用NgZone边界管理，在区域外协调任务调度，仅在实际DOM更新时回到Angular上下文，有效减少变更检测开销，实现无阻塞的渐进式渲染策略。
-- 图片懒加载：采用IntersectionObserver API实现高效视口检测，通过零轮询的观察者模式替代传统滚动事件监听。将观察器实例化和元素跟踪操作置于Angular区域外执行，仅在元素进入可视区域时切换至Angular上下文触发资源加载，最大限度减少不必要的变更检测周期，实现对内存和CPU的双重优化。
+- 大表单渲染优化:采用时间分片机制，在不阻塞主线程的前提下，将大表单任务拆分为小的渲染渲染批次，通过setTimeout将渲染任务加入到异步任务队列，利用requestAnimationFrame在空闲帧的时候进行组件渲染。
+- 图片懒加载：采用IntersectionObserver进行视口检测，替代传统滚动事件监听。在元素进入到视图区域内才加载图片资源。
 
 ## 2、如何在页面内一次性渲染10万条数据，并保证页面不卡顿？
-
-1、虚拟滚动(最优解)
-2、时间分片渲染：setTimeout，requestAnimationFrame等
-
+对于大量数据渲染的时候，JS运算并不是性能的瓶颈，性能的瓶颈主要在于渲染阶段：
+- 时间分片渲染：setTimeout，requestAnimationFrame等
+- 虚拟滚动(最优解)L通过计算渲染区域的高度和可视区域的高度来判断是否加载下一页。
+setTimeout 和闪屏现象：
+- setTimeout的执行时间并不是确定的。在JS中，setTimeout任务被放进事件队列中，只有主线程执行完才会去检查事件队列中的任务是否需要执行，因此setTimeout的实际执行时间可能会比其设定的时间晚一些。
+- 刷新频率受屏幕分辨率和屏幕尺寸的影响，因此不同设备的刷新频率可能会不同，而setTimeout只能设置一个固定时间间隔，这个时间不一定和屏幕的刷新时间相同。
+setTimeout相比，requestAnimationFrame最大的优势是由系统来决定回调函数的执行时机。requestAnimationFrame的步伐跟着系统的刷新步伐走。它能保证回调函数在屏幕每一次的刷新间隔中只被执行一次，这样就不会引起丢帧现象。
 
 ## 3、谈谈IntersectionObserver
 
@@ -293,5 +296,57 @@ JavaScript引擎通过自动垃圾回收(Garbage Collection，简称GC)管理内
 - 避免创建不必要对象
 
 
+## 24、谈谈前端常用的设计模式？
+- 单例模式：全局状态管理（如Redux、Vuex的store），浏览器中的localStorage/sessionStorage工具类
+- 工厂模式: 根据不同类型处理不同的操作,如表单的统一验证
+- 观察者模式/发布订阅模式：Vue和React的响应式系统，浏览器事件监听，rxjs
+- 代理模式：Vue3的Proxy响应式系统，缓存请求结果
+- 装饰器模式：React高阶组件(HOC)，TypeScript/ES装饰器，日志记录、性能统计装饰器
+等等
 
+## 25、谈谈js中的原型和原型链？
+**原型** JavaScript中每个对象都有一个__proto__指向它的原型对象，对象可以从其原型继承属性和方法。
+
+**原型链** 当访问一个对象的属性或方法时，如果这个对象上本身没有这个属性时，它就会去它的原型__proto__上去找，如果还找不到，就去原型的原型上去找...一直直到找到最顶层（Object.prototype）为止，Object.prototype对象也有__proto__属性，值为null。
+
+## 26、iOS 和 Android 在浏览器渲染机制上存在差异？
+iOS 和 Android 在浏览器渲染机制上存在差异，主要体现在 ‌层叠上下文（Stacking Context）‌ 的实现和定位元素的渲染策略上。具体区别如下：
+**核心机制差异** 
+- 浏览器内核不同‌：‌iOS‌强制使用 WebKit 内核（包括所有第三方浏览器）；Android‌主流使用 Chromium（Blink 内核，如 Chrome、Edge 等）；
+- 层叠上下文规则：iOS WebKit‌：对层叠上下文的创建更加严格，尤其在 position: fixed 元素或父元素有某些 CSS 属性（如 transform、opacity）时，易生成新的层叠上下文；‌Android Blink‌：对层叠上下文的处理相对宽松，允许 z-index 跨层级比较。
+
+**为何 iOS 需要将弹出层放到根元素**
+
+父级层叠上下文的限制‌：
+- 如果弹出层的父元素设置了 transform、opacity < 1、position: relative|absolute 等属性，‌iOS 会强制创建新的层叠上下文‌。
+- 此时弹出层的 z-index ‌仅在父级层叠上下文中生效‌，无法突破父级与根元素下的其他元素比较。
+
+```javascript
+<!-- 父元素触发层叠上下文 -->
+<div style="transform: translateZ(0);">
+  <!-- 弹出层的 z-index 只能在父级内生效 -->
+  <div class="popup" style="z-index: 1000;"></div>
+</div>
+```
+‌iOS 的 position: fixed 渲染策略‌：
+- iOS 对 fixed 定位元素的渲染较为保守，可能因滚动容器或父级溢出属性（如 overflow: hidden）导致层级异常；
+- 将弹出层直接放在 <body> 下，可绕过父级限制，确保层级计算基于根上下文；
+
+Android 为何允许 z-index: 1000 直接生效：
+- Blink 的层级穿透能力‌：Android 的 Blink 内核允许 z-index 跨层级比较，即使父元素创建了层叠上下文，子元素的 z-index 仍可能覆盖外部元素（非严格遵循标准）；
+- ‌更宽松的渲染策略‌：对 position: fixed 和层叠上下文的处理更灵活，不易被父级属性限制
+
+**解决方案（兼容 iOS 和 Android）**
+- 将弹出层置于 <body> 末尾‌
+- 避免父级触发层叠上下文‌：移除父元素的 transform、opacity < 1、position 等属性
+- ‌显式提升层级（保险做法）
+```css
+.popup {
+  position: fixed;
+  z-index: 1000;
+  /* 强制提升到复合层（可选） */
+  transform: translateZ(0);
+}
+```
+- 使用 position: fixed 而非 absolute:fixed 直接基于视口定位，减少层级干扰
 
