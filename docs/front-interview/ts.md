@@ -1,6 +1,7 @@
 ---
 title: ts
 createTime: 2025/05/06 13:40:14
+permalink: /article/i9o48jeb/
 ---
 
 ## 1、说说 typescript 的数据类型有哪些？

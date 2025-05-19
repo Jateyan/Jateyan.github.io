@@ -90,6 +90,7 @@ export const navbar = defineNavbarConfig([
     text: "前端面试",
     items: [
       { text: "路线", link: "/front-interview/index" },
+      { text: "高频", link: "/front-interview/高频" },
       { text: "qiankun", link: "/front-interview/qiankun" },
       { text: "前端场景", link: "/front-interview/scene" },
       { text: "js", link: "/front-interview/js" },

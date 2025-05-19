@@ -330,14 +330,14 @@ iOS 和 Android 在浏览器渲染机制上存在差异，主要体现在 ‌层
 ```
 ‌iOS 的 position: fixed 渲染策略‌：
 - iOS 对 fixed 定位元素的渲染较为保守，可能因滚动容器或父级溢出属性（如 overflow: hidden）导致层级异常；
-- 将弹出层直接放在 <body> 下，可绕过父级限制，确保层级计算基于根上下文；
+- 将弹出层直接放在 body 下，可绕过父级限制，确保层级计算基于根上下文；
 
 Android 为何允许 z-index: 1000 直接生效：
 - Blink 的层级穿透能力‌：Android 的 Blink 内核允许 z-index 跨层级比较，即使父元素创建了层叠上下文，子元素的 z-index 仍可能覆盖外部元素（非严格遵循标准）；
 - ‌更宽松的渲染策略‌：对 position: fixed 和层叠上下文的处理更灵活，不易被父级属性限制
 
 **解决方案（兼容 iOS 和 Android）**
-- 将弹出层置于 <body> 末尾‌
+- 将弹出层置于 body 末尾‌
 - 避免父级触发层叠上下文‌：移除父元素的 transform、opacity < 1、position 等属性
 - ‌显式提升层级（保险做法）
 ```css
