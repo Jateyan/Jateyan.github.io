@@ -7,7 +7,7 @@ config:
     full: true
     background: gradient
     hero:
-      name: 柠檬小站
+      name: 柠檬小站22
       tagline: 前端全栈修炼手册
       text: 以组件构建界面，用算法驱动交互，以工程化提升效能
       image: /images/hero-image.svg
