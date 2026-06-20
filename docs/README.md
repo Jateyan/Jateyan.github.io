@@ -1,7 +1,7 @@
 ---
 home: true
 heroImage: https://vuejs.press/images/hero.png
-heroText: 柠檬小站
+heroText: 柠檬小站1
 tagline: 专注全栈开发与技术分享
 actions:
   - text: 开始阅读
